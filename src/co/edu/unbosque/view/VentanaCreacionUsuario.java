@@ -18,23 +18,22 @@ import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 
 @SuppressWarnings("serial")
-public class VentanaUsuario extends JFrame {
+public class VentanaCreacionUsuario extends JFrame {
 	private JPanel ventana;
-	private JLabel salir, fantasma, continuar, fondo, nuevo;
+	private JLabel salir, fantasma, continuar, fondo;
 	private JTextField usuario;
 	private Color sc, pr;
 	private Font fuente;
 	private ArrayList<JLabel> botones;
 	private JTextPane text;
 
-	public VentanaUsuario(MouseListener mouse, MouseMotionListener momo) {
+	public VentanaCreacionUsuario(MouseListener mouse, MouseMotionListener momo) {
 		fuente = Fuente.oFuente();
 		ventana = new JPanel();
 		salir = new JLabel("Exit", SwingConstants.CENTER);
 		fantasma = new JLabel();
-		continuar = new JLabel("Go on", SwingConstants.CENTER);
+		continuar = new JLabel("Create", SwingConstants.CENTER);
 		fondo = new JLabel();
-		nuevo = new JLabel("New User", SwingConstants.CENTER);
 		usuario = new JTextField();
 		pr = new Color(56, 56, 56);
 		sc = new Color(72, 72, 72);
@@ -44,12 +43,11 @@ public class VentanaUsuario extends JFrame {
 		botones.add(salir);
 		botones.add(fantasma);
 		botones.add(continuar);
-		botones.add(nuevo);
 		//
 		salir.setForeground(Color.WHITE);
 		salir.setFont(fuente.deriveFont(Font.BOLD, 30));
 		salir.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		salir.setBounds(0, 150, 133, 50);
+		salir.setBounds(0, 150, 200, 50);
 		salir.addMouseListener(mouse);
 		salir.setBackground(Color.RED);
 		salir.setOpaque(true);
@@ -59,17 +57,10 @@ public class VentanaUsuario extends JFrame {
 		continuar.setForeground(Color.WHITE);
 		continuar.setFont(fuente.deriveFont(Font.BOLD, 30));
 		continuar.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		continuar.setBounds(266, 150, 140, 50);
+		continuar.setBounds(200, 150, 200, 50);
 		continuar.addMouseListener(mouse);
 		continuar.setBackground(pr);
 		continuar.setOpaque(true);
-		nuevo.setForeground(Color.WHITE);
-		nuevo.setFont(fuente.deriveFont(Font.BOLD, 30));
-		nuevo.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		nuevo.setBounds(133, 150, 133, 50);
-		nuevo.addMouseListener(mouse);
-		nuevo.setBackground(pr);
-		nuevo.setOpaque(true);
 		usuario.setForeground(Color.BLACK);
 		usuario.setFont(fuente.deriveFont(Font.BOLD, 30));
 		usuario.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -94,7 +85,6 @@ public class VentanaUsuario extends JFrame {
 		ventana.setLayout(null);
 		ventana.add(text);
 		ventana.add(usuario);
-		ventana.add(nuevo);
 		ventana.add(continuar);
 		ventana.add(salir);
 		ventana.add(fantasma);
@@ -162,4 +152,5 @@ public class VentanaUsuario extends JFrame {
 	public void limpiar() {
 		usuario.setText("");
 	}
+
 }

@@ -5,8 +5,10 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 import co.edu.unbosque.view.Fuente;
+import co.edu.unbosque.view.Mensaje;
 import co.edu.unbosque.view.PanelAbajo;
 import co.edu.unbosque.view.PanelArriba;
+import co.edu.unbosque.view.VentanaCreacionUsuario;
 import co.edu.unbosque.view.VentanaLiberar;
 import co.edu.unbosque.view.VentanaMovimiento;
 import co.edu.unbosque.view.VentanaPokemon;
@@ -24,6 +26,10 @@ public class Controller implements MouseListener, MouseMotionListener {
 	private PanelArriba arriba;
 	private PanelAbajo abajo;
 	private int xmouse, ymouse;
+	private HiloPrimario primario;
+	private VentanaCreacionUsuario createUs;
+	private String userActual;
+	private Mensaje mensaje;
 
 	public Controller() {
 		fuente = new Fuente();
@@ -34,7 +40,30 @@ public class Controller implements MouseListener, MouseMotionListener {
 		arriba = new PanelArriba();
 		abajo = new PanelAbajo(this);
 		poke = new VentanaPokemon(arriba, abajo, this, this);
+		createUs = new VentanaCreacionUsuario(this, this);
 		user.setVisible(true);
+		userActual = "";
+		try {
+			primario = new HiloPrimario(7250);
+			primario.start();
+		} catch (Exception e) {
+			try {
+				primario = new HiloPrimario(7500);
+				primario.start();
+			} catch (Exception e2) {
+				try {
+					primario = new HiloPrimario(7750);
+					primario.start();
+				} catch (Exception e3) {
+					try {
+						primario = new HiloPrimario(8000);
+						primario.start();
+					} catch (Exception e4) {
+					}
+				}
+			}
+		}
+
 	}
 
 	@Override
@@ -59,6 +88,10 @@ public class Controller implements MouseListener, MouseMotionListener {
 			int x = e.getXOnScreen();
 			int y = e.getYOnScreen();
 			free.ubicacion((x - xmouse), (y - ymouse));
+		} else if (e.getSource().equals(createUs.obtenerLB(1))) {
+			int x = e.getXOnScreen();
+			int y = e.getYOnScreen();
+			createUs.ubicacion((x - xmouse), (y - ymouse));
 		}
 
 	}
@@ -132,8 +165,14 @@ public class Controller implements MouseListener, MouseMotionListener {
 		} else if (e.getSource().equals(user.obtenerLB(0))) {
 			System.exit(0);
 		} else if (e.getSource().equals(user.obtenerLB(2))) {
+			if (user.getUsuario().equals(null) || user.getUsuario().equals("")) {
+				mensaje.mensaje("User no exist");
+			}
 			user.setVisible(false);
 			principal.setVisible(true);
+		} else if (e.getSource().equals(user.obtenerLB(3))) {
+			user.setVisible(false);
+			createUs.setVisible(true);
 		} else if (e.getSource().equals(mov.obtenerLB(0))) {
 			// Volver
 			mov.setVisible(false);
@@ -152,6 +191,14 @@ public class Controller implements MouseListener, MouseMotionListener {
 			System.out.println(free.isLiberated());
 			free.setVisible(false);
 			principal.setVisible(true);
+		} else if (e.getSource().equals(createUs.obtenerLB(0))) {
+			createUs.setVisible(false);
+			user.setVisible(true);
+		} else if (e.getSource().equals(createUs.obtenerLB(2))) {
+			// Liberar
+			System.out.println(createUs.getUsuario());
+			createUs.setVisible(false);
+			user.setVisible(true);
 		}
 
 	}
@@ -171,6 +218,9 @@ public class Controller implements MouseListener, MouseMotionListener {
 			xmouse = e.getX();
 			ymouse = e.getY();
 		} else if (e.getSource().equals(free.obtenerLB(1))) {
+			xmouse = e.getX();
+			ymouse = e.getY();
+		} else if (e.getSource().equals(createUs.obtenerLB(1))) {
 			xmouse = e.getX();
 			ymouse = e.getY();
 		}
@@ -221,6 +271,8 @@ public class Controller implements MouseListener, MouseMotionListener {
 			user.interiorColor(0);
 		} else if (e.getSource().equals(user.obtenerLB(2))) {
 			user.interiorColor(2);
+		} else if (e.getSource().equals(user.obtenerLB(3))) {
+			user.interiorColor(3);
 		} else if (e.getSource().equals(mov.obtenerLB(0))) {
 			mov.interiorColor(0);
 		} else if (e.getSource().equals(mov.obtenerLB(2))) {
@@ -229,6 +281,10 @@ public class Controller implements MouseListener, MouseMotionListener {
 			free.interiorColor(0);
 		} else if (e.getSource().equals(free.obtenerLB(2))) {
 			free.interiorColor(2);
+		} else if (e.getSource().equals(createUs.obtenerLB(0))) {
+			createUs.interiorColor(0);
+		} else if (e.getSource().equals(createUs.obtenerLB(2))) {
+			createUs.interiorColor(2);
 		}
 	}
 
@@ -270,6 +326,8 @@ public class Controller implements MouseListener, MouseMotionListener {
 			user.exteriorColor(0);
 		} else if (e.getSource().equals(user.obtenerLB(2))) {
 			user.exteriorColor(2);
+		} else if (e.getSource().equals(user.obtenerLB(3))) {
+			user.exteriorColor(3);
 		} else if (e.getSource().equals(mov.obtenerLB(0))) {
 			mov.exteriorColor(0);
 		} else if (e.getSource().equals(mov.obtenerLB(2))) {
@@ -278,6 +336,10 @@ public class Controller implements MouseListener, MouseMotionListener {
 			free.exteriorColor(0);
 		} else if (e.getSource().equals(free.obtenerLB(2))) {
 			free.exteriorColor(2);
+		} else if (e.getSource().equals(createUs.obtenerLB(0))) {
+			createUs.exteriorColor(0);
+		} else if (e.getSource().equals(createUs.obtenerLB(2))) {
+			createUs.exteriorColor(2);
 		}
 
 	}
