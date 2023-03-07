@@ -8,6 +8,7 @@ import co.edu.unbosque.view.Fuente;
 import co.edu.unbosque.view.Mensaje;
 import co.edu.unbosque.view.PanelAbajo;
 import co.edu.unbosque.view.PanelArriba;
+import co.edu.unbosque.view.VentanaCaptura;
 import co.edu.unbosque.view.VentanaCreacionUsuario;
 import co.edu.unbosque.view.VentanaLiberar;
 import co.edu.unbosque.view.VentanaMovimiento;
@@ -23,6 +24,7 @@ public class Controller implements MouseListener, MouseMotionListener {
 	private VentanaPokemon poke;
 	private VentanaLiberar free;
 	private VentanaMovimiento mov;
+	private VentanaCaptura captura;
 	private PanelArriba arriba;
 	private PanelAbajo abajo;
 	private int xmouse, ymouse;
@@ -41,22 +43,23 @@ public class Controller implements MouseListener, MouseMotionListener {
 		abajo = new PanelAbajo(this);
 		poke = new VentanaPokemon(arriba, abajo, this, this);
 		createUs = new VentanaCreacionUsuario(this, this);
+		captura = new VentanaCaptura(this, this);
 		user.setVisible(true);
 		userActual = "";
 		try {
-			primario = new HiloPrimario(7250);
+			primario = new HiloPrimario("127.0.0.1", 7250);
 			primario.start();
 		} catch (Exception e) {
 			try {
-				primario = new HiloPrimario(7500);
+				primario = new HiloPrimario("127.0.0.1", 7500);
 				primario.start();
 			} catch (Exception e2) {
 				try {
-					primario = new HiloPrimario(7750);
+					primario = new HiloPrimario("127.0.0.1", 7750);
 					primario.start();
 				} catch (Exception e3) {
 					try {
-						primario = new HiloPrimario(8000);
+						primario = new HiloPrimario("127.0.0.1", 8000);
 						primario.start();
 					} catch (Exception e4) {
 					}
@@ -92,6 +95,10 @@ public class Controller implements MouseListener, MouseMotionListener {
 			int x = e.getXOnScreen();
 			int y = e.getYOnScreen();
 			createUs.ubicacion((x - xmouse), (y - ymouse));
+		} else if (e.getSource().equals(captura.obtenerLB(1))) {
+			int x = e.getXOnScreen();
+			int y = e.getYOnScreen();
+			captura.ubicacion((x - xmouse), (y - ymouse));
 		}
 
 	}
@@ -102,10 +109,12 @@ public class Controller implements MouseListener, MouseMotionListener {
 
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource().equals(principal.obtenerLB(0))) {
 			System.exit(0);
+			primario.enviarInfo("Over");
 		} else if (e.getSource().equals(principal.obtenerLB(2))) {
 			// liberar
 			free.cambiarTextoPoke("Pikachu");
@@ -117,6 +126,10 @@ public class Controller implements MouseListener, MouseMotionListener {
 			mov.setVisible(true);
 		} else if (e.getSource().equals(principal.obtenerLB(4))) {
 			// sumar
+			principal.setVisible(false);
+			captura.setCajas(false);
+//			captura.setPokemones(null);
+			captura.setVisible(true);
 		} else if (e.getSource().equals(principal.obtenerLB(5))) {
 			// datos
 			principal.setVisible(false);
@@ -137,17 +150,17 @@ public class Controller implements MouseListener, MouseMotionListener {
 			// Izquierda
 
 			if (principal.getCajaActual() == 3) {
-				principal.cambioCaja(2);
+				principal.cambioCaja(2, null);
 			} else if (principal.getCajaActual() == 2) {
-				principal.cambioCaja(1);
+				principal.cambioCaja(1, null);
 			}
 
 		} else if (e.getSource().equals(principal.obtenerLB(13))) {
 			// Derecha
 			if (principal.getCajaActual() == 1) {
-				principal.cambioCaja(2);
+				principal.cambioCaja(2, null);
 			} else if (principal.getCajaActual() == 2) {
-				principal.cambioCaja(3);
+				principal.cambioCaja(3, null);
 			}
 		} else if (e.getSource().equals(abajo.obtenerLB(0))) {
 			// Grito
@@ -166,10 +179,22 @@ public class Controller implements MouseListener, MouseMotionListener {
 			System.exit(0);
 		} else if (e.getSource().equals(user.obtenerLB(2))) {
 			if (user.getUsuario().equals(null) || user.getUsuario().equals("")) {
-				mensaje.mensaje("User no exist");
+				mensaje.mensaje("Enter the user");
+			} else {
+				String tmp;
+				tmp = primario.enviarInfo(user.getUsuario() + "-iniciar$");
+				if (tmp.equalsIgnoreCase("°logro°")) {
+					userActual = user.getUsuario();
+					user.setVisible(false);
+					principal.setVisible(true);
+
+				} else {
+					Mensaje.mensaje("No exist");
+				}
+				user.setVisible(false);
+				principal.setVisible(true);
 			}
-			user.setVisible(false);
-			principal.setVisible(true);
+
 		} else if (e.getSource().equals(user.obtenerLB(3))) {
 			user.setVisible(false);
 			createUs.setVisible(true);
@@ -195,10 +220,40 @@ public class Controller implements MouseListener, MouseMotionListener {
 			createUs.setVisible(false);
 			user.setVisible(true);
 		} else if (e.getSource().equals(createUs.obtenerLB(2))) {
-			// Liberar
-			System.out.println(createUs.getUsuario());
-			createUs.setVisible(false);
-			user.setVisible(true);
+			// crear
+			if (createUs.getUsuario().equals(null) || createUs.getUsuario().equals("")) {
+				mensaje.mensaje("Enter the user");
+			} else {
+				String tmp;
+				tmp = primario.enviarInfo(createUs.getUsuario() + "-nuevo$");
+				if (tmp.equalsIgnoreCase("°logro°")) {
+					Mensaje.mensaje("User created successfully");
+					createUs.setVisible(false);
+					user.setVisible(true);
+
+				} else {
+					Mensaje.mensaje("Could not create");
+				}
+			}
+		} else if (e.getSource().equals(captura.obtenerLB(0))) {
+			// Volver
+			captura.setVisible(false);
+			principal.setVisible(true);
+		} else if (e.getSource().equals(captura.obtenerLB(2))) {
+			// Capturar
+			String tmp;
+			tmp = primario.enviarInfo(userActual + "-capturar-" + captura.getPokemon() + "-" + captura.getNombre() + "-"
+					+ captura.getCajas() + "$");
+			if (tmp.equalsIgnoreCase("°logro°")) {
+				Mensaje.mensaje("Pokemon captured successfully");
+				captura.setVisible(false);
+				principal.setVisible(true);
+
+			} else {
+				Mensaje.mensaje("Could not create");
+			}
+			captura.setVisible(false);
+			principal.setVisible(true);
 		}
 
 	}
@@ -221,6 +276,9 @@ public class Controller implements MouseListener, MouseMotionListener {
 			xmouse = e.getX();
 			ymouse = e.getY();
 		} else if (e.getSource().equals(createUs.obtenerLB(1))) {
+			xmouse = e.getX();
+			ymouse = e.getY();
+		} else if (e.getSource().equals(captura.obtenerLB(1))) {
 			xmouse = e.getX();
 			ymouse = e.getY();
 		}
@@ -285,6 +343,10 @@ public class Controller implements MouseListener, MouseMotionListener {
 			createUs.interiorColor(0);
 		} else if (e.getSource().equals(createUs.obtenerLB(2))) {
 			createUs.interiorColor(2);
+		} else if (e.getSource().equals(captura.obtenerLB(0))) {
+			captura.interiorColor(0);
+		} else if (e.getSource().equals(captura.obtenerLB(2))) {
+			captura.interiorColor(2);
 		}
 	}
 
@@ -340,7 +402,12 @@ public class Controller implements MouseListener, MouseMotionListener {
 			createUs.exteriorColor(0);
 		} else if (e.getSource().equals(createUs.obtenerLB(2))) {
 			createUs.exteriorColor(2);
+		} else if (e.getSource().equals(captura.obtenerLB(0))) {
+			captura.exteriorColor(0);
+		} else if (e.getSource().equals(captura.obtenerLB(2))) {
+			captura.exteriorColor(2);
 		}
 
 	}
+
 }

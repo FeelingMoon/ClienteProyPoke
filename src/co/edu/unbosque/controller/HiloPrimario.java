@@ -26,6 +26,7 @@ public class HiloPrimario extends Thread {
 		this.in = null;
 		this.out = null;
 		this.port = port;
+		line = "";
 		res = "";
 	}
 
@@ -95,8 +96,9 @@ public class HiloPrimario extends Thread {
 		}
 	}
 
-	public synchronized void enviarInfo(String msm) {
+	public synchronized String enviarInfo(String msm) {
 		line = msm;
 		this.notify();
+		return res;
 	}
 }

@@ -9,6 +9,8 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
@@ -343,7 +345,7 @@ public class VentanaPrincipal extends JFrame {
 				imagen.getHeight(), Image.SCALE_DEFAULT)));
 	}
 
-	public boolean cambioCaja(int x) {
+	public boolean cambioCaja(int x, String pokes) {
 		if (x == 1) {
 			caja.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/Inf1.png").getImage()
 					.getScaledInstance((int) (dCaja.getWidth()), (int) (dCaja.getHeight() - 85), Image.SCALE_DEFAULT)));
@@ -351,6 +353,11 @@ public class VentanaPrincipal extends JFrame {
 					.getScaledInstance((int) (dBarra.getWidth()), (int) (dBarra.getHeight()), Image.SCALE_DEFAULT)));
 			titulo.setText("Box 1");
 			cajaActual = 1;
+			pokemones.removeAllItems();
+			List<String> list = Arrays.asList(pokes.split("&%&"));
+			for (int i = 0; i < list.size(); i++) {
+				pokemones.addItem(list.get(i));
+			}
 			return true;
 		} else if (x == 2) {
 			caja.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/Inf2.png").getImage()
@@ -359,6 +366,11 @@ public class VentanaPrincipal extends JFrame {
 					.getScaledInstance((int) (dBarra.getWidth()), (int) (dBarra.getHeight()), Image.SCALE_DEFAULT)));
 			titulo.setText("Box 2");
 			cajaActual = 2;
+			pokemones.removeAllItems();
+			List<String> list = Arrays.asList(pokes.split("&%&"));
+			for (int i = 0; i < list.size(); i++) {
+				pokemones.addItem(list.get(i));
+			}
 			return true;
 		} else if (x == 3) {
 			caja.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/Inf3.png").getImage()
@@ -366,6 +378,11 @@ public class VentanaPrincipal extends JFrame {
 			barra.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/Sup3.png").getImage()
 					.getScaledInstance((int) (dBarra.getWidth()), (int) (dBarra.getHeight()), Image.SCALE_DEFAULT)));
 			titulo.setText("Box 3");
+			pokemones.removeAllItems();
+			List<String> list = Arrays.asList(pokes.split("&%&"));
+			for (int i = 0; i < list.size(); i++) {
+				pokemones.addItem(list.get(i));
+			}
 			cajaActual = 3;
 			return true;
 		}
