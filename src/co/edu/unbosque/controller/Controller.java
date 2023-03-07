@@ -177,22 +177,23 @@ public class Controller implements MouseListener, MouseMotionListener {
 			principal.setVisible(true);
 		} else if (e.getSource().equals(user.obtenerLB(0))) {
 			System.exit(0);
+			primario.enviarInfo("Over");
 		} else if (e.getSource().equals(user.obtenerLB(2))) {
 			if (user.getUsuario().equals(null) || user.getUsuario().equals("")) {
 				mensaje.mensaje("Enter the user");
 			} else {
 				String tmp;
-				tmp = primario.enviarInfo(user.getUsuario() + "-iniciar$");
-				if (tmp.equalsIgnoreCase("°logro°")) {
+				System.out.println(user.getUsuario() + "-iniciar@true");
+				tmp = primario.enviarInfo(user.getUsuario() + "-iniciar@true");
+				if (tmp.equalsIgnoreCase("logro")) {
 					userActual = user.getUsuario();
+					Mensaje.mensaje("Welcome " + user.getUsuario());
 					user.setVisible(false);
 					principal.setVisible(true);
 
 				} else {
 					Mensaje.mensaje("No exist");
 				}
-				user.setVisible(false);
-				principal.setVisible(true);
 			}
 
 		} else if (e.getSource().equals(user.obtenerLB(3))) {
@@ -225,8 +226,8 @@ public class Controller implements MouseListener, MouseMotionListener {
 				mensaje.mensaje("Enter the user");
 			} else {
 				String tmp;
-				tmp = primario.enviarInfo(createUs.getUsuario() + "-nuevo$");
-				if (tmp.equalsIgnoreCase("°logro°")) {
+				tmp = primario.enviarInfo(createUs.getUsuario() + "-nuevo@true");
+				if (tmp.equalsIgnoreCase("logro")) {
 					Mensaje.mensaje("User created successfully");
 					createUs.setVisible(false);
 					user.setVisible(true);
@@ -243,8 +244,8 @@ public class Controller implements MouseListener, MouseMotionListener {
 			// Capturar
 			String tmp;
 			tmp = primario.enviarInfo(userActual + "-capturar-" + captura.getPokemon() + "-" + captura.getNombre() + "-"
-					+ captura.getCajas() + "$");
-			if (tmp.equalsIgnoreCase("°logro°")) {
+					+ captura.getCajas() + "@");
+			if (tmp.equalsIgnoreCase("logro")) {
 				Mensaje.mensaje("Pokemon captured successfully");
 				captura.setVisible(false);
 				principal.setVisible(true);

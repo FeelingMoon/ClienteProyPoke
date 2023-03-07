@@ -63,7 +63,7 @@ public class HiloPrimario extends Thread {
 				if (!line.equals("Over")) {
 					line = "";
 				}
-				if (res.equals("°error°")) {
+				if (res.equals("error")) {
 					Mensaje.mensaje("Error with the server");
 					break;
 				}
