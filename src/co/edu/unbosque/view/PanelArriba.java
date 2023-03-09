@@ -16,8 +16,10 @@ import javax.swing.border.MatteBorder;
 
 @SuppressWarnings("serial")
 /**
- * @author MiguelLinares
- * @author JohanSilva
+ * Class in charge of the above part of the pokemon information.
+ * 
+ * @author Miguel Linares
+ * @author Johan Silva
  */
 public class PanelArriba extends JPanel {
 	private JPanel tituloPanel, principal, pokeTipo, estadisticas;

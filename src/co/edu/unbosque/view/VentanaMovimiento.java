@@ -17,6 +17,13 @@ import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 
+/**
+ * Class in charge of the window to move a pokemon.
+ * 
+ * @author Miguel Linares
+ * @author Johan Silva
+ * 
+ */
 @SuppressWarnings("serial")
 public class VentanaMovimiento extends JFrame {
 	private JPanel ventana;
@@ -27,6 +34,12 @@ public class VentanaMovimiento extends JFrame {
 	private JTextPane text;
 	private JComboBox<String> ubicacionP;
 
+	/**
+	 * Window constructor where you initialize what is going to be used.
+	 * 
+	 * @param mouse Mouse Action Listener
+	 * @param momo  Mouse Motion Listener
+	 */
 	public VentanaMovimiento(MouseListener mouse, MouseMotionListener momo) {
 		fuente = Fuente.oFuente();
 		ventana = new JPanel();
@@ -149,10 +162,21 @@ public class VentanaMovimiento extends JFrame {
 
 	}
 
-	public String getBox() {
+	/**
+	 * Method that obtains the selected box.
+	 * 
+	 * @return Selected Box
+	 */
+	public String getBoxSelected() {
 		return ubicacionP.getSelectedItem().toString();
 	}
 
+	/**
+	 * Method that is responsible for displaying information about the pokemon's
+	 * movement.
+	 * 
+	 * @param poke Pokemon to move
+	 */
 	public void cambiarPokemon(String poke) {
 		text.setText("Move Pokemon " + poke + " to the box:");
 	}

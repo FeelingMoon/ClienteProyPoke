@@ -15,6 +15,14 @@ import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 
+/**
+ * 
+ * Class in charge of the pokemon release window.
+ * 
+ * @author Miguel Linares
+ * @author Johan Silva
+ *
+ */
 @SuppressWarnings("serial")
 public class VentanaLiberar extends JFrame {
 	private JPanel ventana;
@@ -24,6 +32,12 @@ public class VentanaLiberar extends JFrame {
 	private ArrayList<JLabel> botones;
 	private JTextPane text;
 
+	/**
+	 * Window constructor where you initialize what is going to be used.
+	 * 
+	 * @param mouse Mouse Action Listener
+	 * @param momo  Mouse Motion Listener
+	 */
 	public VentanaLiberar(MouseListener mouse, MouseMotionListener momo) {
 		fuente = Fuente.oFuente();
 		ventana = new JPanel();
@@ -131,10 +145,11 @@ public class VentanaLiberar extends JFrame {
 
 	}
 
-	public boolean isLiberated() {
-		return true;
-	}
-
+	/**
+	 * Method for changing the name of the pokemon to give information to the user.
+	 * 
+	 * @param poke Pokemon name
+	 */
 	public void cambiarTextoPoke(String poke) {
 		text.setText("Do you want to release the " + poke + "?");
 	}

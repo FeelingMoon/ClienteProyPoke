@@ -446,10 +446,18 @@ public class VentanaPrincipal extends JFrame {
 		}
 	}
 
+	/**
+	 * Method that obtains the current selected pokemon
+	 * 
+	 * @return Pokemon current
+	 */
 	public String getActual() {
 		return (String) pokemones.getSelectedItem();
 	}
 
+	/**
+	 * Method to check if a pokemon's buttons can be used.
+	 */
 	public void comprobar() {
 		if (pokemones.getItemCount() == 0) {
 			pokemones.setEnabled(false);

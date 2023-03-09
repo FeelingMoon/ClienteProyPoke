@@ -21,6 +21,8 @@ import javax.swing.border.MatteBorder;
 @SuppressWarnings("serial")
 
 /**
+ * Class in charge of the bottom part when displaying pokemon information.
+ * 
  * @author MiguelLinares
  * @author JohanSilva
  *
@@ -37,8 +39,8 @@ public class PanelAbajo extends JPanel {
 	 * This method initializes the attributes, their own attributes and adds them to
 	 * the JPanel
 	 * 
-	 * @param fuente   Font of the program
-	 * @param listener Button Action Manager
+	 * @param fuente Font of the program
+	 * @param mouse  Mouse Action Listener
 	 */
 	public PanelAbajo(MouseListener mouse) {
 		fuente = Fuente.oFuente();

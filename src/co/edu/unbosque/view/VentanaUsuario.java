@@ -17,6 +17,13 @@ import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 
+/**
+ * Class in charge of the window to login the user.
+ * 
+ * @author Miguel Linares
+ * @author Johan Silva
+ * 
+ */
 @SuppressWarnings("serial")
 public class VentanaUsuario extends JFrame {
 	private JPanel ventana;
@@ -27,6 +34,12 @@ public class VentanaUsuario extends JFrame {
 	private ArrayList<JLabel> botones;
 	private JTextPane text;
 
+	/**
+	 * Window constructor where you initialize what is going to be used.
+	 * 
+	 * @param mouse Mouse Action Listener
+	 * @param momo  Mouse Motion Listener
+	 */
 	public VentanaUsuario(MouseListener mouse, MouseMotionListener momo) {
 		fuente = Fuente.oFuente();
 		ventana = new JPanel();
@@ -155,10 +168,18 @@ public class VentanaUsuario extends JFrame {
 
 	}
 
+	/**
+	 * Method that obtains the information written in the user's box
+	 * 
+	 * @return User entered
+	 */
 	public String getUsuario() {
 		return usuario.getText();
 	}
 
+	/**
+	 * Method in charge of cleaning the user's box.
+	 */
 	public void limpiar() {
 		usuario.setText("");
 	}

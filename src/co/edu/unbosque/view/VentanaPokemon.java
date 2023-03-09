@@ -8,6 +8,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * Class in charge of the window to information of pokemon.
+ * 
+ * @author Miguel Linares
+ * @author Johan Silva
+ * 
+ */
 @SuppressWarnings("serial")
 public class VentanaPokemon extends JFrame {
 	private JLabel fantasma;
@@ -19,6 +26,8 @@ public class VentanaPokemon extends JFrame {
 	 * 
 	 * @param panelArriba Top of the window
 	 * @param panelAbajo  Bottom of the window
+	 * @param mouse       Mouse Action Listener
+	 * @param momo        Mouse Motion Listener
 	 */
 	public VentanaPokemon(JPanel panelArriba, JPanel panelAbajo, MouseListener mouse, MouseMotionListener momo) {
 		fantasma = new JLabel();
@@ -51,6 +60,11 @@ public class VentanaPokemon extends JFrame {
 
 	}
 
+	/**
+	 * Method that returns the ghost of the window.
+	 * 
+	 * @return Label ghost
+	 */
 	public JLabel getFantasma() {
 		return fantasma;
 	}

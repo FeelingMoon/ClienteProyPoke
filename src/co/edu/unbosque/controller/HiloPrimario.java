@@ -21,6 +21,13 @@ import co.edu.unbosque.view.VentanaPokemon;
 import co.edu.unbosque.view.VentanaPrincipal;
 import co.edu.unbosque.view.VentanaUsuario;
 
+/**
+ * Class that creates and uses the thread for the program connection.
+ * 
+ * @author Miguel Linares
+ * @author Johan Silva
+ *
+ */
 public class HiloPrimario extends Thread {
 	private Socket socket;
 	private Socket socketR;
@@ -38,12 +45,21 @@ public class HiloPrimario extends Thread {
 	PanelArriba arriba;
 	PanelAbajo abajo;
 	VentanaCreacionUsuario createUs;
-	String userActual, move1, mov2,;
+	String userActual;
 	String cajaActualPoke;
 	Boolean estado;
 	int numCaja;
 	private Mensaje mensaje;
 
+	/**
+	 * Class constructor.
+	 * 
+	 * @param address IP adress
+	 * @param port    Port to conecction
+	 * @param mouse   Mouse Action Listener
+	 * @param momo    Motion Mouse Listener
+	 * @param itemL   Item Listener
+	 */
 	public HiloPrimario(String address, int port, MouseListener mouse, MouseMotionListener momo, ItemListener itemL) {
 		this.address = address;
 		this.socket = null;
@@ -223,6 +239,9 @@ public class HiloPrimario extends Thread {
 		}
 	}
 
+	/**
+	 * Method that pauses the thread.
+	 */
 	public synchronized void pausarHilo() {
 		try {
 			this.wait();
@@ -231,6 +250,11 @@ public class HiloPrimario extends Thread {
 		}
 	}
 
+	/**
+	 * Method sending a message through the thread.
+	 * 
+	 * @param msm Message
+	 */
 	public synchronized void enviarInfo(String msm) {
 		line = msm;
 		this.notify();

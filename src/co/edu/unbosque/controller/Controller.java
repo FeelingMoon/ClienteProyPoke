@@ -9,12 +9,23 @@ import java.awt.event.MouseMotionListener;
 import co.edu.unbosque.view.Fuente;
 import co.edu.unbosque.view.Mensaje;
 
+/**
+ * 
+ * Controller class that links all program packages.
+ * 
+ * @author Miguel Linares
+ * @author Johan Silva
+ *
+ */
 public class Controller implements MouseListener, MouseMotionListener, ItemListener {
 	@SuppressWarnings("unused")
 	private Fuente fuente;
 	private int xmouse, ymouse;
 	HiloPrimario primario;
 
+	/**
+	 * Controller construction method.
+	 */
 	public Controller() {
 		fuente = new Fuente();
 
@@ -166,7 +177,7 @@ public class Controller implements MouseListener, MouseMotionListener, ItemListe
 			primario.principal.setVisible(true);
 		} else if (e.getSource().equals(primario.mov.obtenerLB(2))) {
 			// Mover
-			System.out.println(primario.mov.getBox());
+			System.out.println(primario.mov.getBoxSelected());
 			primario.mov.setVisible(false);
 			primario.principal.setVisible(true);
 		} else if (e.getSource().equals(primario.free.obtenerLB(0))) {
