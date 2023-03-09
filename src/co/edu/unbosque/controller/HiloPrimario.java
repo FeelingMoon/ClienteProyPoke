@@ -37,10 +37,8 @@ public class HiloPrimario extends Thread {
 	VentanaCaptura captura;
 	PanelArriba arriba;
 	PanelAbajo abajo;
-	private int xmouse, ymouse;
-	private HiloPrimario primario;
 	VentanaCreacionUsuario createUs;
-	String userActual;
+	String userActual, move1, mov2,;
 	String cajaActualPoke;
 	Boolean estado;
 	int numCaja;
@@ -107,8 +105,9 @@ public class HiloPrimario extends Thread {
 					if (res.equals("logro")) {
 						userActual = line.split("@")[0].split("-")[0];
 						user.setVisible(false);
-						estado = true;
-						line = userActual + "-get@" + numCaja;
+//						estado = true;
+						Mensaje.mensaje("Welcome " + user.getUsuario());
+//						line = userActual + "-get@" + numCaja;
 						principal.setVisible(true);
 					} else {
 						System.err.println(res);
@@ -129,8 +128,18 @@ public class HiloPrimario extends Thread {
 						System.err.println("Vacio");
 					} else {
 						cajaActualPoke = res;
-						System.err.println(cajaActualPoke + " caja1");
-						estado = false;
+						String[] tmp = cajaActualPoke.split("%!%");
+						for (int i = 0; i < tmp.length; i++) {
+
+						}
+
+						principal.eliminarComboBox();
+						for (int i = 0; i < tmp.length; i++) {
+							String[] tmp2 = tmp[i].split("%&");
+							principal.agregarItem(tmp2[4].split("-")[0]);
+						}
+						principal.cambioCaja(1);
+						principal.comprobar();
 					}
 				}
 				if (line.split("@")[0].split("-")[1].equals("get") && line.split("@")[1].equals("2")) {
@@ -153,9 +162,8 @@ public class HiloPrimario extends Thread {
 					if (res.equals("error")) {
 						mensaje.mensaje("El bolsillo se encuentra lleno intente en una caja");
 					} else {
-						System.err.println(res);
-						estado = true;
-						line = userActual + "-get@" + numCaja;
+//						estado = true;
+//						line = userActual + "-get@" + numCaja;
 						captura.setVisible(false);
 						principal.setVisible(true);
 
@@ -177,9 +185,17 @@ public class HiloPrimario extends Thread {
 						captura.setVisible(true);
 					}
 				}
+				if (line.split("@")[0].split("-")[1].equals("liberar")) {
+					if (res.equals("error")) {
+						System.out.println("No liberado");
+					} else if (res.equals("logro")) {
+						mensaje.mensaje("Liberado");
+						principal.setVisible(false);
+						free.setVisible(true);
+					}
+				}
 
-				if (!line.equals("Over") && estado == false) {
-					System.out.println("paso");
+				if (!line.equals("Over")) {
 					line = "";
 				}
 //				if (res.equals("error")) {

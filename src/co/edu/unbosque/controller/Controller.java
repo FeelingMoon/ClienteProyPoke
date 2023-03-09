@@ -118,17 +118,17 @@ public class Controller implements MouseListener, MouseMotionListener, ItemListe
 			// Izquierda
 
 			if (primario.principal.getCajaActual() == 3) {
-				primario.principal.cambioCaja(2, null);
+				primario.principal.cambioCaja(2);
 			} else if (primario.principal.getCajaActual() == 2) {
-				primario.principal.cambioCaja(1, null);
+				primario.principal.cambioCaja(1);
 			}
 
 		} else if (e.getSource().equals(primario.principal.obtenerLB(13))) {
 			// Derecha
 			if (primario.principal.getCajaActual() == 1) {
-				primario.principal.cambioCaja(2, null);
+				primario.principal.cambioCaja(2);
 			} else if (primario.principal.getCajaActual() == 2) {
-				primario.principal.cambioCaja(3, null);
+				primario.principal.cambioCaja(3);
 			}
 		} else if (e.getSource().equals(primario.principal.obtenerLB(14))) {
 			// Actualizar
@@ -154,7 +154,7 @@ public class Controller implements MouseListener, MouseMotionListener, ItemListe
 				Mensaje.mensaje("Enter the user");
 			} else {
 				primario.enviarInfo(primario.user.getUsuario() + "-iniciar@true");
-				Mensaje.mensaje("Welcome " + primario.user.getUsuario());
+
 			}
 
 		} else if (e.getSource().equals(primario.user.obtenerLB(3))) {
@@ -175,7 +175,8 @@ public class Controller implements MouseListener, MouseMotionListener, ItemListe
 			primario.principal.setVisible(true);
 		} else if (e.getSource().equals(primario.free.obtenerLB(2))) {
 			// Liberar
-			System.out.println(primario.free.isLiberated());
+			primario.enviarInfo(primario.userActual + "-liberar@" + primario.principal.getCajaActual() + "-"
+					+ primario.principal.getActual());
 			primario.free.setVisible(false);
 			primario.principal.setVisible(true);
 		} else if (e.getSource().equals(primario.createUs.obtenerLB(0))) {
@@ -367,9 +368,15 @@ public class Controller implements MouseListener, MouseMotionListener, ItemListe
 	public void itemStateChanged(ItemEvent e) {
 		// 1.Pokemon, 2.Pokemon
 
-		if (e.getSource().equals(primario.principal.getCombo())) {
-			primario.principal.getCombo().getSelectedItem();
-		}
+//		if (e.getSource().equals(primario.principal.getCombo())) {
+//			primario.principal.getCombo().getSelectedItem();
+//			String end = "";
+//			String cad = (String) primario.principal.getActual();
+//			for (int i = 0; i < cad.length(); i++) {
+//				if (Character.isDigit(cad.charAt(i)))
+//					end = end + cad.charAt(i);
+//			}
+//		}
 
 	}
 

@@ -9,8 +9,6 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
@@ -40,6 +38,7 @@ public class VentanaPrincipal extends JFrame {
 	private Dimension dCaja, dBarra;
 	private Font fuente;
 	private int cajaActual;
+	private MouseListener m;
 
 	/**
 	 * Cosntructor where you initialize what is used in the window.
@@ -49,6 +48,7 @@ public class VentanaPrincipal extends JFrame {
 	 * @param itemLis Item Action Listener
 	 */
 	public VentanaPrincipal(MouseListener mouse, MouseMotionListener motion, ItemListener itemLis) {
+		m = mouse;
 		cajaActual = 1;
 		pokemones = new JComboBox<>();
 		ventana = new JPanel();
@@ -114,7 +114,7 @@ public class VentanaPrincipal extends JFrame {
 		actualizar.setForeground(Color.WHITE);
 		actualizar.setFont(fuente.deriveFont(Font.BOLD, 30));
 		actualizar.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		actualizar.setBounds(90, 400, 150, 50);
+		actualizar.setBounds(90, 450, 150, 50);
 		actualizar.addMouseListener(mouse);
 		actualizar.setBackground(Color.RED);
 		actualizar.setOpaque(true);
@@ -166,23 +166,6 @@ public class VentanaPrincipal extends JFrame {
 		pokemones.setBackground(pr);
 		pokemones.setEditable(false);
 		pokemones.setForeground(Color.WHITE);
-		if (pokemones.getItemCount() == 0) {
-			pokemones.setEnabled(false);
-			liberar.setEnabled(false);
-			liberar.addMouseListener(null);
-			mover.setEnabled(false);
-			mover.addMouseListener(null);
-			datos.setEnabled(false);
-			datos.addMouseListener(null);
-		} else {
-			pokemones.setEnabled(true);
-			liberar.setEnabled(true);
-			mover.setEnabled(true);
-			datos.setEnabled(true);
-			liberar.addMouseListener(mouse);
-			mover.addMouseListener(mouse);
-			datos.addMouseListener(mouse);
-		}
 		caja.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/Inf1.png").getImage()
 				.getScaledInstance((int) (dCaja.getWidth()), (int) (dCaja.getHeight() - 85), Image.SCALE_DEFAULT)));
 		caja.setBounds(425, 120, (int) (dCaja.getWidth()), (int) (dCaja.getHeight() - 85));
@@ -270,6 +253,7 @@ public class VentanaPrincipal extends JFrame {
 				.getScaledInstance((int) (this.getWidth()), (int) (this.getHeight()), Image.SCALE_DEFAULT)));
 		fondo.setSize(((int) (this.getWidth())), (int) (this.getHeight()));
 		pokemones.addItemListener(itemLis);
+		comprobar();
 	}
 
 	/**
@@ -290,7 +274,7 @@ public class VentanaPrincipal extends JFrame {
 	 */
 	public void interiorColor(int x) {
 		if (x == 0 || x == 14) {
-			botones.get(x).setForeground(Color.BLACK);
+			botones.get(x).setBackground(Color.BLACK);
 		} else if (x < 6) {
 			botones.get(x).setBackground(sc);
 		} else if (x > 11) {
@@ -306,7 +290,7 @@ public class VentanaPrincipal extends JFrame {
 	 */
 	public void exteriorColor(int x) {
 		if (x == 0 || x == 14) {
-			botones.get(x).setForeground(Color.RED);
+			botones.get(x).setBackground(Color.RED);
 		} else if (x < 6) {
 			botones.get(x).setBackground(pr);
 		} else if (x > 11) {
@@ -332,6 +316,7 @@ public class VentanaPrincipal extends JFrame {
 	 */
 	public void agregarComboBox(String nombre) {
 		pokemones.addItem(nombre);
+
 	}
 
 	/**
@@ -398,20 +383,15 @@ public class VentanaPrincipal extends JFrame {
 	 * @param x     Box selected
 	 * @param pokes Pokemons in the box
 	 */
-	public void cambioCaja(int x, String pokes) {
-		if (x == 1 && pokes != null) {
+	public void cambioCaja(int x) {
+		if (x == 1) {
 			caja.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/Inf1.png").getImage()
 					.getScaledInstance((int) (dCaja.getWidth()), (int) (dCaja.getHeight() - 85), Image.SCALE_DEFAULT)));
 			barra.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/Sup1.png").getImage()
 					.getScaledInstance((int) (dBarra.getWidth()), (int) (dBarra.getHeight()), Image.SCALE_DEFAULT)));
 			titulo.setText("Box 1");
 			cajaActual = 1;
-			pokemones.removeAllItems();
-			List<String> list = Arrays.asList(pokes.split("&%&"));
-			for (int i = 0; i < list.size(); i++) {
-				pokemones.addItem(list.get(i));
-			}
-		} else if (x == 2 && pokes != null)
+		} else if (x == 2)
 
 		{
 			caja.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/Inf2.png").getImage()
@@ -421,21 +401,14 @@ public class VentanaPrincipal extends JFrame {
 			titulo.setText("Box 2");
 			cajaActual = 2;
 			pokemones.removeAllItems();
-			List<String> list = Arrays.asList(pokes.split("&%&"));
-			for (int i = 0; i < list.size(); i++) {
-				pokemones.addItem(list.get(i));
-			}
-		} else if (x == 3 && pokes != null) {
+
+		} else if (x == 3) {
 			caja.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/Inf3.png").getImage()
 					.getScaledInstance((int) (dCaja.getWidth()), (int) (dCaja.getHeight() - 85), Image.SCALE_DEFAULT)));
 			barra.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/Sup3.png").getImage()
 					.getScaledInstance((int) (dBarra.getWidth()), (int) (dBarra.getHeight()), Image.SCALE_DEFAULT)));
 			titulo.setText("Box 3");
 			pokemones.removeAllItems();
-			List<String> list = Arrays.asList(pokes.split("&%&"));
-			for (int i = 0; i < list.size(); i++) {
-				pokemones.addItem(list.get(i));
-			}
 			cajaActual = 3;
 		}
 
@@ -470,6 +443,30 @@ public class VentanaPrincipal extends JFrame {
 			if (pokesBolsillo.get(i).getIcon() != null) {
 				pokesBolsillo.get(i).setOpaque(false);
 			}
+		}
+	}
+
+	public String getActual() {
+		return (String) pokemones.getSelectedItem();
+	}
+
+	public void comprobar() {
+		if (pokemones.getItemCount() == 0) {
+			pokemones.setEnabled(false);
+			liberar.setEnabled(false);
+			liberar.addMouseListener(null);
+			mover.setEnabled(false);
+			mover.addMouseListener(null);
+			datos.setEnabled(false);
+			datos.addMouseListener(null);
+		} else {
+			pokemones.setEnabled(true);
+			liberar.setEnabled(true);
+			mover.setEnabled(true);
+			datos.setEnabled(true);
+			liberar.addMouseListener(m);
+			mover.addMouseListener(m);
+			datos.addMouseListener(m);
 		}
 	}
 }

@@ -240,7 +240,6 @@ public class VentanaCaptura extends JFrame {
 		for (int i = 0; i < cad.length(); i++) {
 			if (Character.isDigit(cad.charAt(i)))
 				end = end + cad.charAt(i);
-
 		}
 		return end;
 	}
