@@ -84,8 +84,8 @@ public class Controller implements MouseListener, MouseMotionListener, ItemListe
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource().equals(primario.principal.obtenerLB(0))) {
-			System.exit(0);
 			primario.enviarInfo("Over");
+			System.exit(0);
 		} else if (e.getSource().equals(primario.principal.obtenerLB(2))) {
 			// liberar
 			primario.free.cambiarTextoPoke("Pikachu");
@@ -130,6 +130,9 @@ public class Controller implements MouseListener, MouseMotionListener, ItemListe
 			} else if (primario.principal.getCajaActual() == 2) {
 				primario.principal.cambioCaja(3, null);
 			}
+		} else if (e.getSource().equals(primario.principal.obtenerLB(14))) {
+			// Actualizar
+			primario.enviarInfo(primario.userActual + "-get@" + primario.numCaja);
 		} else if (e.getSource().equals(primario.abajo.obtenerLB(0))) {
 			// Grito
 		} else if (e.getSource().equals(primario.abajo.obtenerLB(1))) {
@@ -144,13 +147,14 @@ public class Controller implements MouseListener, MouseMotionListener, ItemListe
 			primario.poke.setVisible(false);
 			primario.principal.setVisible(true);
 		} else if (e.getSource().equals(primario.user.obtenerLB(0))) {
-			System.exit(0);
 			primario.enviarInfo("Over");
+			System.exit(0);
 		} else if (e.getSource().equals(primario.user.obtenerLB(2))) {
 			if (primario.user.getUsuario().equals(null) || primario.user.getUsuario().equals("")) {
 				Mensaje.mensaje("Enter the user");
 			} else {
 				primario.enviarInfo(primario.user.getUsuario() + "-iniciar@true");
+				Mensaje.mensaje("Welcome " + primario.user.getUsuario());
 			}
 
 		} else if (e.getSource().equals(primario.user.obtenerLB(3))) {
@@ -189,18 +193,17 @@ public class Controller implements MouseListener, MouseMotionListener, ItemListe
 			primario.captura.setVisible(false);
 			primario.principal.setVisible(true);
 		} else if (e.getSource().equals(primario.captura.obtenerLB(2))) {
-
 			String tmp = primario.captura.getPokemon();
 			System.out.println(tmp);
 			if (primario.captura.getNombre().equals("") || primario.captura.getNombre().equals(null)) {
 				primario.enviarInfo(
 						primario.userActual + "-capturar@" + tmp + "-Nothing-" + primario.captura.getCaja());
-				primario.enviarInfo(primario.userActual + "-get@" + primario.captura.getCaja());
+				Mensaje.mensaje("Agregado con exito");
 				primario.captura.limpiar();
 			} else {
 				primario.enviarInfo(primario.userActual + "-capturar@" + tmp + "-" + primario.captura.getNombre() + "-"
 						+ primario.captura.getCaja());
-				primario.enviarInfo(primario.userActual + "-get@" + primario.captura.getCaja());
+				Mensaje.mensaje("Agregado con exito");
 				primario.captura.limpiar();
 			}
 			primario.captura.setVisible(false);

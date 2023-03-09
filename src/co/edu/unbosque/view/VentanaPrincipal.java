@@ -20,11 +20,19 @@ import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 
+/**
+ * 
+ * Class in charge of creating the main window.
+ * 
+ * @author Miguel Linares
+ * @author Johan Silva
+ *
+ */
 @SuppressWarnings("serial")
 public class VentanaPrincipal extends JFrame {
 	private JPanel ventana;
 	private JLabel salir, fantasma, pokemon1, pokemon2, pokemon3, pokemon4, pokemon5, pokemon6;
-	private JLabel caja, barra, bolsillo, datos, liberar, mover, sumar, imagen, fondo, derecha, izquierda;
+	private JLabel caja, barra, bolsillo, datos, liberar, mover, sumar, imagen, fondo, derecha, izquierda, actualizar;
 	private JComboBox<String> pokemones;
 	private ArrayList<JLabel> botones, pokesBolsillo;
 	private JTextPane titulo;
@@ -33,6 +41,13 @@ public class VentanaPrincipal extends JFrame {
 	private Font fuente;
 	private int cajaActual;
 
+	/**
+	 * Cosntructor where you initialize what is used in the window.
+	 * 
+	 * @param mouse   Mouse action listener
+	 * @param momo    Motion Mouse Actions Listener
+	 * @param itemLis Item Action Listener
+	 */
 	public VentanaPrincipal(MouseListener mouse, MouseMotionListener motion, ItemListener itemLis) {
 		cajaActual = 1;
 		pokemones = new JComboBox<>();
@@ -47,6 +62,7 @@ public class VentanaPrincipal extends JFrame {
 		mover = new JLabel("Move", SwingConstants.CENTER);
 		liberar = new JLabel("Liberate", SwingConstants.CENTER);
 		sumar = new JLabel("Capture", SwingConstants.CENTER);
+		actualizar = new JLabel("Update", SwingConstants.CENTER);
 		pr = new Color(56, 56, 56);
 		sc = new Color(72, 72, 72);
 		dCaja = new Dimension(168 * 5, 121 * 5);
@@ -79,6 +95,7 @@ public class VentanaPrincipal extends JFrame {
 		botones.add(pokemon6);
 		botones.add(izquierda);
 		botones.add(derecha);
+		botones.add(actualizar);
 		//
 		pokesBolsillo.add(pokemon1);
 		pokesBolsillo.add(pokemon2);
@@ -94,6 +111,13 @@ public class VentanaPrincipal extends JFrame {
 		salir.addMouseListener(mouse);
 		salir.setBackground(Color.RED);
 		salir.setOpaque(true);
+		actualizar.setForeground(Color.WHITE);
+		actualizar.setFont(fuente.deriveFont(Font.BOLD, 30));
+		actualizar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		actualizar.setBounds(90, 400, 150, 50);
+		actualizar.addMouseListener(mouse);
+		actualizar.setBackground(Color.RED);
+		actualizar.setOpaque(true);
 		fantasma.setBounds(0, 0, 1280, 100);
 		fantasma.addMouseListener(mouse);
 		fantasma.addMouseMotionListener(motion);
@@ -189,6 +213,7 @@ public class VentanaPrincipal extends JFrame {
 				.getScaledInstance(120 * 3, 208 * 3, Image.SCALE_DEFAULT)));
 		bolsillo.setBounds(32, 20, 120 * 3, 208 * 3);
 		bolsillo.add(salir);
+		bolsillo.add(actualizar);
 		pokemon1.setBounds(45, 75, 100, 100);
 		pokemon1.setBackground(Color.pink);
 		pokemon1.setOpaque(true);
@@ -264,8 +289,8 @@ public class VentanaPrincipal extends JFrame {
 	 * @param x The label to change the color.
 	 */
 	public void interiorColor(int x) {
-		if (x == 0) {
-			salir.setBackground(Color.BLACK);
+		if (x == 0 || x == 14) {
+			botones.get(x).setForeground(Color.BLACK);
 		} else if (x < 6) {
 			botones.get(x).setBackground(sc);
 		} else if (x > 11) {
@@ -280,8 +305,8 @@ public class VentanaPrincipal extends JFrame {
 	 * @param x The label to change the color.
 	 */
 	public void exteriorColor(int x) {
-		if (x == 0) {
-			salir.setBackground(Color.RED);
+		if (x == 0 || x == 14) {
+			botones.get(x).setForeground(Color.RED);
 		} else if (x < 6) {
 			botones.get(x).setBackground(pr);
 		} else if (x > 11) {
@@ -300,9 +325,13 @@ public class VentanaPrincipal extends JFrame {
 
 	}
 
+	/**
+	 * Method for adding a pokemon to the selection.
+	 * 
+	 * @param nombre Name of the pokemon.
+	 */
 	public void agregarComboBox(String nombre) {
 		pokemones.addItem(nombre);
-		pokemones.setSelectedIndex(0);
 	}
 
 	/**
@@ -348,6 +377,11 @@ public class VentanaPrincipal extends JFrame {
 		return pokemones;
 	}
 
+	/**
+	 * Method in charge of the main pokemon change.
+	 * 
+	 * @param url Url of the imagen.
+	 */
 	public void cambioImagen(String url) {
 		if (url != null) {
 			imagen.setOpaque(true);
@@ -358,6 +392,12 @@ public class VentanaPrincipal extends JFrame {
 		}
 	}
 
+	/**
+	 * Method in charge of changing boxes in the main window.
+	 * 
+	 * @param x     Box selected
+	 * @param pokes Pokemons in the box
+	 */
 	public void cambioCaja(int x, String pokes) {
 		if (x == 1 && pokes != null) {
 			caja.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/Inf1.png").getImage()
@@ -401,15 +441,30 @@ public class VentanaPrincipal extends JFrame {
 
 	}
 
+	/**
+	 * Method in charge of giving the box in use.
+	 * 
+	 * @return Number of the box
+	 */
 	public int getCajaActual() {
 		return cajaActual;
 	}
 
+	/**
+	 * Method in charge of adding an item in the box.
+	 * 
+	 * @param item Item to add.
+	 */
 	public void agregarItem(String item) {
 		pokemones.addItem(item);
 	}
 
-	public void agregarBolsilloImg(String urls) {
+	/**
+	 * Method for placing images of the suitcase.
+	 * 
+	 * @param urls Arrangement with the images.
+	 */
+	public void agregarBolsilloImg(String[] urls) {
 
 		for (int i = 0; i < pokesBolsillo.size(); i++) {
 			if (pokesBolsillo.get(i).getIcon() != null) {

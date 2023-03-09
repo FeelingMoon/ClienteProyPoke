@@ -42,6 +42,8 @@ public class HiloPrimario extends Thread {
 	VentanaCreacionUsuario createUs;
 	String userActual;
 	String cajaActualPoke;
+	Boolean estado;
+	int numCaja;
 	private Mensaje mensaje;
 
 	public HiloPrimario(String address, int port, MouseListener mouse, MouseMotionListener momo, ItemListener itemL) {
@@ -66,6 +68,8 @@ public class HiloPrimario extends Thread {
 		user.setVisible(true);
 		userActual = "";
 		cajaActualPoke = "";
+		estado = false;
+		numCaja = 1;
 	}
 
 	@SuppressWarnings("static-access")
@@ -102,9 +106,9 @@ public class HiloPrimario extends Thread {
 				if (line.split("@")[0].split("-")[1].equals("iniciar")) {
 					if (res.equals("logro")) {
 						userActual = line.split("@")[0].split("-")[0];
-						System.out.println();
-						enviarInfo(userActual + "-get@1");
 						user.setVisible(false);
+						estado = true;
+						line = userActual + "-get@" + numCaja;
 						principal.setVisible(true);
 					} else {
 						System.err.println(res);
@@ -113,7 +117,6 @@ public class HiloPrimario extends Thread {
 				}
 				if (line.split("@")[0].split("-")[1].equals("nuevo")) {
 					if (!res.equalsIgnoreCase("error")) {
-						System.out.println(res);
 						Mensaje.mensaje("User created successfully");
 						createUs.setVisible(false);
 						user.setVisible(true);
@@ -123,10 +126,11 @@ public class HiloPrimario extends Thread {
 				}
 				if (line.split("@")[0].split("-")[1].equals("get") && line.split("@")[1].equals("1")) {
 					if (res.equals("error")) {
-						System.out.println("Vacio");
+						System.err.println("Vacio");
 					} else {
 						cajaActualPoke = res;
-						System.err.println(res + "caja1");
+						System.err.println(cajaActualPoke + " caja1");
+						estado = false;
 					}
 				}
 				if (line.split("@")[0].split("-")[1].equals("get") && line.split("@")[1].equals("2")) {
@@ -134,7 +138,7 @@ public class HiloPrimario extends Thread {
 						System.out.println("Vacio");
 					} else {
 						cajaActualPoke = res;
-						System.err.println(res + "caja2");
+						System.err.println(cajaActualPoke + " caja2");
 					}
 				}
 				if (line.split("@")[0].split("-")[1].equals("get") && line.split("@")[1].equals("3")) {
@@ -142,7 +146,7 @@ public class HiloPrimario extends Thread {
 						System.out.println("Vacio");
 					} else {
 						cajaActualPoke = res;
-						System.err.println(res + "caja3");
+						System.err.println(cajaActualPoke + " caja3");
 					}
 				}
 				if (line.split("@")[0].split("-")[1].equals("capturar")) {
@@ -150,9 +154,9 @@ public class HiloPrimario extends Thread {
 						mensaje.mensaje("El bolsillo se encuentra lleno intente en una caja");
 					} else {
 						System.err.println(res);
+						estado = true;
+						line = userActual + "-get@" + numCaja;
 						captura.setVisible(false);
-						enviarInfo(userActual + "-get@1");
-						mensaje.mensaje("Se agrego exitosamente");
 						principal.setVisible(true);
 
 					}
@@ -174,7 +178,8 @@ public class HiloPrimario extends Thread {
 					}
 				}
 
-				if (!line.equals("Over")) {
+				if (!line.equals("Over") && estado == false) {
+					System.out.println("paso");
 					line = "";
 				}
 //				if (res.equals("error")) {
@@ -192,9 +197,9 @@ public class HiloPrimario extends Thread {
 		}
 		// close the connection
 		try {
-			out.close();
-			socket.close();
 			if (line.equals("Over")) {
+				out.close();
+				socket.close();
 				System.exit(0);
 			}
 		} catch (IOException i) {

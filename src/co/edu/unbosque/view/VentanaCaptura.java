@@ -19,6 +19,14 @@ import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 
+/**
+ * 
+ * Class in charge of the creation of the capture pokemon window of the program
+ * 
+ * @author Miguel Linares
+ * @author Johan Silva
+ *
+ */
 @SuppressWarnings("serial")
 public class VentanaCaptura extends JFrame {
 	private JPanel ventana;
@@ -30,6 +38,13 @@ public class VentanaCaptura extends JFrame {
 	private JTextPane text, text2, text3;
 	private JComboBox<String> cajas, pokemon;
 
+	/**
+	 * Cosntructor where you initialize what is used in the window.
+	 * 
+	 * @param mouse   Mouse action listener
+	 * @param momo    Motion Mouse Actions Listener
+	 * @param itemLis Item Action Listener
+	 */
 	public VentanaCaptura(MouseListener mouse, MouseMotionListener momo, ItemListener itemLis) {
 		fuente = Fuente.oFuente();
 		ventana = new JPanel();
@@ -182,10 +197,19 @@ public class VentanaCaptura extends JFrame {
 
 	}
 
+	/**
+	 * Method that takes care of obtaining the name of the pokemon in the box.
+	 * 
+	 * @return Name of pokemon
+	 */
 	public String getNombre() {
 		return nombre.getText();
 	}
 
+	/**
+	 * Method that adds the pokemon in the selectable options.
+	 * 
+	 */
 	public void setPokemones(String[] pokemones) {
 		for (int i = 0; i < pokemones.length; i++) {
 			pokemon.addItem(pokemones[i]);
@@ -193,6 +217,9 @@ public class VentanaCaptura extends JFrame {
 
 	}
 
+	/**
+	 * Method that is in charge of adding the boxes to select.
+	 */
 	public void setCajas() {
 		cajas.removeAllItems();
 		cajas.addItem("Box 1");
@@ -202,10 +229,11 @@ public class VentanaCaptura extends JFrame {
 
 	}
 
-	public String getCajas() {
-		return (String) cajas.getSelectedItem();
-	}
-
+	/**
+	 * Method in charge of obtaining the selected pokemon.
+	 * 
+	 * @return The pokemon
+	 */
 	public String getPokemon() {
 		String end = "";
 		String cad = (String) pokemon.getSelectedItem();
@@ -214,10 +242,15 @@ public class VentanaCaptura extends JFrame {
 				end = end + cad.charAt(i);
 
 		}
-		System.out.println(end + " numero poke");
 		return end;
 	}
 
+	/**
+	 * Method in charge of obtaining the selection objects.
+	 * 
+	 * @param i Type the selection objects.
+	 * @return Selected object.
+	 */
 	public JComboBox<String> getComBox(int i) {
 		if (i == 1) {
 			return cajas;
@@ -226,6 +259,11 @@ public class VentanaCaptura extends JFrame {
 		}
 	}
 
+	/**
+	 * Method in charge of obtaining the selected box.
+	 * 
+	 * @return The Box
+	 */
 	public String getCaja() {
 		String end = "";
 		String cad = (String) cajas.getSelectedItem();
@@ -233,10 +271,12 @@ public class VentanaCaptura extends JFrame {
 			if (Character.isDigit(cad.charAt(i)))
 				end = end + cad.charAt(i);
 		}
-		System.out.println(end + " numero caja");
 		return end;
 	}
 
+	/**
+	 * Method in charge of clearing the window information.
+	 */
 	public void limpiar() {
 		pokemon.removeAllItems();
 		cajas.removeAllItems();
