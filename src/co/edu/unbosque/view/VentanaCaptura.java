@@ -4,11 +4,10 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
@@ -31,7 +30,7 @@ public class VentanaCaptura extends JFrame {
 	private JTextPane text, text2, text3;
 	private JComboBox<String> cajas, pokemon;
 
-	public VentanaCaptura(MouseListener mouse, MouseMotionListener momo) {
+	public VentanaCaptura(MouseListener mouse, MouseMotionListener momo, ItemListener itemLis) {
 		fuente = Fuente.oFuente();
 		ventana = new JPanel();
 		salir = new JLabel("Exit", SwingConstants.CENTER);
@@ -130,6 +129,8 @@ public class VentanaCaptura extends JFrame {
 		fondo.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/fondo.png").getImage()
 				.getScaledInstance((int) (this.getWidth()), (int) (this.getHeight()), Image.SCALE_DEFAULT)));
 		fondo.setSize(((int) (this.getWidth())), (int) (this.getHeight()));
+		cajas.addItemListener(itemLis);
+		pokemon.addItemListener(itemLis);
 	}
 
 	/**
@@ -185,21 +186,20 @@ public class VentanaCaptura extends JFrame {
 		return nombre.getText();
 	}
 
-	public void setPokemones(String pokemones) {
-		List<String> list = Arrays.asList(pokemones.split("&%&"));
-		for (int i = 0; i < list.size(); i++) {
-			pokemon.addItem(list.get(i));
+	public void setPokemones(String[] pokemones) {
+		for (int i = 0; i < pokemones.length; i++) {
+			pokemon.addItem(pokemones[i]);
 		}
+
 	}
 
-	public void setCajas(boolean isFull) {
+	public void setCajas() {
 		cajas.removeAllItems();
 		cajas.addItem("Box 1");
 		cajas.addItem("Box 2");
 		cajas.addItem("Box 3");
-		if (!isFull) {
-			cajas.addItem("Backpack");
-		}
+		cajas.addItem("Backpack");
+
 	}
 
 	public String getCajas() {
@@ -212,9 +212,32 @@ public class VentanaCaptura extends JFrame {
 		for (int i = 0; i < cad.length(); i++) {
 			if (Character.isDigit(cad.charAt(i)))
 				end = end + cad.charAt(i);
-
 		}
 		return end;
+	}
+
+	public JComboBox<String> getComBox(int i) {
+		if (i == 1) {
+			return cajas;
+		} else {
+			return pokemon;
+		}
+	}
+
+	public String getCaja() {
+		String end = "";
+		String cad = (String) cajas.getSelectedItem();
+		for (int i = 0; i < cad.length(); i++) {
+			if (Character.isDigit(cad.charAt(i)))
+				end = end + cad.charAt(i);
+		}
+		return end;
+	}
+
+	public void limpiar() {
+		pokemon.removeAllItems();
+		cajas.removeAllItems();
+		nombre.setText("");
 	}
 
 }

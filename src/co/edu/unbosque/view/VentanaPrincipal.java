@@ -26,14 +26,14 @@ public class VentanaPrincipal extends JFrame {
 	private JLabel salir, fantasma, pokemon1, pokemon2, pokemon3, pokemon4, pokemon5, pokemon6;
 	private JLabel caja, barra, bolsillo, datos, liberar, mover, sumar, imagen, fondo, derecha, izquierda;
 	private JComboBox<String> pokemones;
-	private ArrayList<JLabel> botones;
+	private ArrayList<JLabel> botones, pokesBolsillo;
 	private JTextPane titulo;
 	private Color sc, pr;
 	private Dimension dCaja, dBarra;
 	private Font fuente;
 	private int cajaActual;
 
-	public VentanaPrincipal(MouseListener mouse, MouseMotionListener motion) {
+	public VentanaPrincipal(MouseListener mouse, MouseMotionListener motion, ItemListener itemLis) {
 		cajaActual = 1;
 		pokemones = new JComboBox<>();
 		ventana = new JPanel();
@@ -63,6 +63,7 @@ public class VentanaPrincipal extends JFrame {
 		fondo = new JLabel();
 		izquierda = new JLabel("<", SwingConstants.CENTER);
 		derecha = new JLabel(">", SwingConstants.CENTER);
+		pokesBolsillo = new ArrayList<>();
 		//
 		botones.add(salir);
 		botones.add(fantasma);
@@ -78,6 +79,13 @@ public class VentanaPrincipal extends JFrame {
 		botones.add(pokemon6);
 		botones.add(izquierda);
 		botones.add(derecha);
+		//
+		pokesBolsillo.add(pokemon1);
+		pokesBolsillo.add(pokemon2);
+		pokesBolsillo.add(pokemon3);
+		pokesBolsillo.add(pokemon4);
+		pokesBolsillo.add(pokemon5);
+		pokesBolsillo.add(pokemon6);
 		//
 		salir.setForeground(Color.WHITE);
 		salir.setFont(fuente.deriveFont(Font.BOLD, 30));
@@ -134,7 +142,6 @@ public class VentanaPrincipal extends JFrame {
 		pokemones.setBackground(pr);
 		pokemones.setEditable(false);
 		pokemones.setForeground(Color.WHITE);
-		pokemones.addItem("wua");
 		if (pokemones.getItemCount() == 0) {
 			pokemones.setEnabled(false);
 			liberar.setEnabled(false);
@@ -237,6 +244,7 @@ public class VentanaPrincipal extends JFrame {
 		fondo.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/fondo.png").getImage()
 				.getScaledInstance((int) (this.getWidth()), (int) (this.getHeight()), Image.SCALE_DEFAULT)));
 		fondo.setSize(((int) (this.getWidth())), (int) (this.getHeight()));
+		pokemones.addItemListener(itemLis);
 	}
 
 	/**
@@ -341,12 +349,17 @@ public class VentanaPrincipal extends JFrame {
 	}
 
 	public void cambioImagen(String url) {
-		imagen.setIcon(new ImageIcon(new ImageIcon(url).getImage().getScaledInstance(imagen.getWidth(),
-				imagen.getHeight(), Image.SCALE_DEFAULT)));
+		if (url != null) {
+			imagen.setOpaque(true);
+			imagen.setIcon(new ImageIcon(new ImageIcon(url).getImage().getScaledInstance(imagen.getWidth(),
+					imagen.getHeight(), Image.SCALE_DEFAULT)));
+		} else {
+			imagen.setOpaque(false);
+		}
 	}
 
-	public boolean cambioCaja(int x, String pokes) {
-		if (x == 1) {
+	public void cambioCaja(int x, String pokes) {
+		if (x == 1 && pokes != null) {
 			caja.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/Inf1.png").getImage()
 					.getScaledInstance((int) (dCaja.getWidth()), (int) (dCaja.getHeight() - 85), Image.SCALE_DEFAULT)));
 			barra.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/Sup1.png").getImage()
@@ -358,8 +371,9 @@ public class VentanaPrincipal extends JFrame {
 			for (int i = 0; i < list.size(); i++) {
 				pokemones.addItem(list.get(i));
 			}
-			return true;
-		} else if (x == 2) {
+		} else if (x == 2 && pokes != null)
+
+		{
 			caja.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/Inf2.png").getImage()
 					.getScaledInstance((int) (dCaja.getWidth()), (int) (dCaja.getHeight() - 85), Image.SCALE_DEFAULT)));
 			barra.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/Sup2.png").getImage()
@@ -371,8 +385,7 @@ public class VentanaPrincipal extends JFrame {
 			for (int i = 0; i < list.size(); i++) {
 				pokemones.addItem(list.get(i));
 			}
-			return true;
-		} else if (x == 3) {
+		} else if (x == 3 && pokes != null) {
 			caja.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/Inf3.png").getImage()
 					.getScaledInstance((int) (dCaja.getWidth()), (int) (dCaja.getHeight() - 85), Image.SCALE_DEFAULT)));
 			barra.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/Sup3.png").getImage()
@@ -384,9 +397,8 @@ public class VentanaPrincipal extends JFrame {
 				pokemones.addItem(list.get(i));
 			}
 			cajaActual = 3;
-			return true;
 		}
-		return false;
+
 	}
 
 	public int getCajaActual() {
@@ -395,5 +407,14 @@ public class VentanaPrincipal extends JFrame {
 
 	public void agregarItem(String item) {
 		pokemones.addItem(item);
+	}
+
+	public void agregarBolsilloImg(String urls) {
+
+		for (int i = 0; i < pokesBolsillo.size(); i++) {
+			if (pokesBolsillo.get(i).getIcon() != null) {
+				pokesBolsillo.get(i).setOpaque(false);
+			}
+		}
 	}
 }
