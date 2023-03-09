@@ -195,10 +195,12 @@ public class Controller implements MouseListener, MouseMotionListener, ItemListe
 			if (primario.captura.getNombre().equals("") || primario.captura.getNombre().equals(null)) {
 				primario.enviarInfo(
 						primario.userActual + "-capturar@" + tmp + "-Nothing-" + primario.captura.getCaja());
+				primario.enviarInfo(primario.userActual + "-get@" + primario.captura.getCaja());
 				primario.captura.limpiar();
 			} else {
 				primario.enviarInfo(primario.userActual + "-capturar@" + tmp + "-" + primario.captura.getNombre() + "-"
 						+ primario.captura.getCaja());
+				primario.enviarInfo(primario.userActual + "-get@" + primario.captura.getCaja());
 				primario.captura.limpiar();
 			}
 			primario.captura.setVisible(false);

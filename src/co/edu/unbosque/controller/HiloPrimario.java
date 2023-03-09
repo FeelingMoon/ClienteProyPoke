@@ -102,6 +102,7 @@ public class HiloPrimario extends Thread {
 				if (line.split("@")[0].split("-")[1].equals("iniciar")) {
 					if (res.equals("logro")) {
 						userActual = line.split("@")[0].split("-")[0];
+						System.out.println();
 						enviarInfo(userActual + "-get@1");
 						user.setVisible(false);
 						principal.setVisible(true);
@@ -120,34 +121,35 @@ public class HiloPrimario extends Thread {
 						Mensaje.mensaje("Could not create");
 					}
 				}
-				if (line.split("@")[0].split("-")[1].equals("get1")) {
+				if (line.split("@")[0].split("-")[1].equals("get") && line.split("@")[1].equals("1")) {
 					if (res.equals("error")) {
 						System.out.println("Vacio");
 					} else {
 						cajaActualPoke = res;
-						System.err.println(res);
+						System.err.println(res + "caja1");
 					}
 				}
-				if (line.split("@")[0].split("-")[1].equals("get2")) {
+				if (line.split("@")[0].split("-")[1].equals("get") && line.split("@")[1].equals("2")) {
 					if (res.equals("error")) {
 						System.out.println("Vacio");
 					} else {
 						cajaActualPoke = res;
-						System.err.println(res);
+						System.err.println(res + "caja2");
 					}
 				}
-				if (line.split("@")[0].split("-")[1].equals("get2")) {
+				if (line.split("@")[0].split("-")[1].equals("get") && line.split("@")[1].equals("3")) {
 					if (res.equals("error")) {
 						System.out.println("Vacio");
 					} else {
 						cajaActualPoke = res;
-						System.err.println(res);
+						System.err.println(res + "caja3");
 					}
 				}
 				if (line.split("@")[0].split("-")[1].equals("capturar")) {
 					if (res.equals("error")) {
 						mensaje.mensaje("El bolsillo se encuentra lleno intente en una caja");
 					} else {
+						System.err.println(res);
 						captura.setVisible(false);
 						enviarInfo(userActual + "-get@1");
 						mensaje.mensaje("Se agrego exitosamente");
@@ -159,7 +161,7 @@ public class HiloPrimario extends Thread {
 					if (res.equals("error")) {
 						System.out.println("Vacio");
 					} else {
-						String[] tmp = res.split("&%&");
+						String[] tmp = res.split("%");
 						String[] tmp2 = new String[tmp.length];
 						for (int i = 0; i < tmp.length; i++) {
 							String[] tmp3 = tmp[i].split("-");
