@@ -12,39 +12,43 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
+import javax.swing.border.MatteBorder;
 
 /**
  * 
- * Class in charge of the pokemon release window.
+ * Class in charge of the window for user creation.
  * 
  * @author Miguel Linares
  * @author Johan Silva
  *
  */
 @SuppressWarnings("serial")
-public class VentanaLiberar extends JFrame {
+public class VentanaCreacionUsuario extends JFrame {
 	private JPanel ventana;
 	private JLabel salir, fantasma, continuar, fondo;
+	private JTextField usuario;
 	private Color sc, pr;
 	private Font fuente;
 	private ArrayList<JLabel> botones;
 	private JTextPane text;
 
 	/**
-	 * Window constructor where you initialize what is going to be used.
+	 * Constructor that initializes what will be used in the window.
 	 * 
 	 * @param mouse Mouse Action Listener
 	 * @param momo  Mouse Motion Listener
 	 */
-	public VentanaLiberar(MouseListener mouse, MouseMotionListener momo) {
+	public VentanaCreacionUsuario(MouseListener mouse, MouseMotionListener momo) {
 		fuente = Fuente.oFuente();
 		ventana = new JPanel();
-		salir = new JLabel("Return", SwingConstants.CENTER);
+		salir = new JLabel("Exit", SwingConstants.CENTER);
 		fantasma = new JLabel();
-		continuar = new JLabel("Release", SwingConstants.CENTER);
+		continuar = new JLabel("Create", SwingConstants.CENTER);
 		fondo = new JLabel();
+		usuario = new JTextField();
 		pr = new Color(56, 56, 56);
 		sc = new Color(72, 72, 72);
 		botones = new ArrayList<>();
@@ -61,7 +65,7 @@ public class VentanaLiberar extends JFrame {
 		salir.addMouseListener(mouse);
 		salir.setBackground(Color.RED);
 		salir.setOpaque(true);
-		fantasma.setBounds(0, 0, 300, 100);
+		fantasma.setBounds(0, 0, 400, 100);
 		fantasma.addMouseListener(mouse);
 		fantasma.addMouseMotionListener(momo);
 		continuar.setForeground(Color.WHITE);
@@ -71,11 +75,20 @@ public class VentanaLiberar extends JFrame {
 		continuar.addMouseListener(mouse);
 		continuar.setBackground(pr);
 		continuar.setOpaque(true);
-		text.setForeground(Color.WHITE);
-		text.setFont(fuente.deriveFont(Font.BOLD, 38));
-		text.setBounds(25, 50, 375, 100);
+		usuario.setForeground(Color.BLACK);
+		usuario.setFont(fuente.deriveFont(Font.BOLD, 30));
+		usuario.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		usuario.setBounds(25, 75, 350, 50);
+		usuario.addMouseListener(mouse);
+		usuario.setBackground(Color.WHITE);
+		usuario.setOpaque(true);
+		usuario.setBorder(new MatteBorder(2, 2, 2, 2, pr));
+		text.setForeground(Color.BLACK);
+		text.setFont(fuente.deriveFont(Font.BOLD, 30));
+		text.setBounds(25, 40, 350, 30);
 		text.setEditable(false);
 		text.setOpaque(false);
+		text.setText("User: ");
 		//
 		this.setSize(400, 200);
 		this.setResizable(false);
@@ -85,6 +98,7 @@ public class VentanaLiberar extends JFrame {
 		ventana.setSize(this.getSize());
 		ventana.setLayout(null);
 		ventana.add(text);
+		ventana.add(usuario);
 		ventana.add(continuar);
 		ventana.add(salir);
 		ventana.add(fantasma);
@@ -146,11 +160,19 @@ public class VentanaLiberar extends JFrame {
 	}
 
 	/**
-	 * Method for changing the name of the pokemon to give information to the user.
+	 * Method that obtains the information written in the user's box
 	 * 
-	 * @param poke Pokemon name
+	 * @return User entered
 	 */
-	public void cambiarTextoPoke(String poke) {
-		text.setText("Do you want to release the " + poke + "?");
+	public String getUsuario() {
+		return usuario.getText();
 	}
+
+	/**
+	 * Method in charge of cleaning the user's box.
+	 */
+	public void limpiar() {
+		usuario.setText("");
+	}
+
 }

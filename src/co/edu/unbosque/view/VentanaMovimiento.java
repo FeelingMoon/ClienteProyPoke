@@ -17,6 +17,13 @@ import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 
+/**
+ * Class in charge of the window to move a pokemon.
+ * 
+ * @author Miguel Linares
+ * @author Johan Silva
+ * 
+ */
 @SuppressWarnings("serial")
 public class VentanaMovimiento extends JFrame {
 	private JPanel ventana;
@@ -27,6 +34,12 @@ public class VentanaMovimiento extends JFrame {
 	private JTextPane text;
 	private JComboBox<String> ubicacionP;
 
+	/**
+	 * Window constructor where you initialize what is going to be used.
+	 * 
+	 * @param mouse Mouse Action Listener
+	 * @param momo  Mouse Motion Listener
+	 */
 	public VentanaMovimiento(MouseListener mouse, MouseMotionListener momo) {
 		fuente = Fuente.oFuente();
 		ventana = new JPanel();
@@ -95,7 +108,7 @@ public class VentanaMovimiento extends JFrame {
 		ventana.add(fondo);
 		//
 		this.add(ventana);
-		fondo.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/fondo.png").getImage()
+		fondo.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/img/fondo.png").getImage()
 				.getScaledInstance((int) (this.getWidth()), (int) (this.getHeight()), Image.SCALE_DEFAULT)));
 		fondo.setSize(((int) (this.getWidth())), (int) (this.getHeight()));
 	}
@@ -149,10 +162,31 @@ public class VentanaMovimiento extends JFrame {
 
 	}
 
-	public String getBox() {
-		return ubicacionP.getSelectedItem().toString();
+	/**
+	 * Method that obtains the selected box.
+	 * 
+	 * @return Selected Box
+	 */
+	public String getBoxSelected() {
+		String end = "";
+		String cad = ubicacionP.getSelectedItem().toString();
+		if (cad.equalsIgnoreCase("Backpack")) {
+			end = "0";
+		} else {
+			for (int i = 0; i < cad.length(); i++) {
+				if (Character.isDigit(cad.charAt(i)))
+					end = end + cad.charAt(i);
+			}
+		}
+		return end;
 	}
 
+	/**
+	 * Method that is responsible for displaying information about the pokemon's
+	 * movement.
+	 * 
+	 * @param poke Pokemon to move
+	 */
 	public void cambiarPokemon(String poke) {
 		text.setText("Move Pokemon " + poke + " to the box:");
 	}

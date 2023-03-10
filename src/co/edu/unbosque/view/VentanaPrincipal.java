@@ -18,20 +18,37 @@ import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 
+/**
+ * 
+ * Class in charge of creating the main window.
+ * 
+ * @author Miguel Linares
+ * @author Johan Silva
+ *
+ */
 @SuppressWarnings("serial")
 public class VentanaPrincipal extends JFrame {
 	private JPanel ventana;
 	private JLabel salir, fantasma, pokemon1, pokemon2, pokemon3, pokemon4, pokemon5, pokemon6;
-	private JLabel caja, barra, bolsillo, datos, liberar, mover, sumar, imagen, fondo, derecha, izquierda;
+	private JLabel caja, barra, bolsillo, datos, liberar, mover, sumar, imagen, fondo, derecha, izquierda, actualizar;
 	private JComboBox<String> pokemones;
-	private ArrayList<JLabel> botones;
+	private ArrayList<JLabel> botones, pokesBolsillo;
 	private JTextPane titulo;
 	private Color sc, pr;
 	private Dimension dCaja, dBarra;
 	private Font fuente;
 	private int cajaActual;
+	private MouseListener m;
 
-	public VentanaPrincipal(MouseListener mouse, MouseMotionListener motion) {
+	/**
+	 * Cosntructor where you initialize what is used in the window.
+	 * 
+	 * @param mouse   Mouse action listener
+	 * @param momo    Motion Mouse Actions Listener
+	 * @param itemLis Item Action Listener
+	 */
+	public VentanaPrincipal(MouseListener mouse, MouseMotionListener motion, ItemListener itemLis) {
+		m = mouse;
 		cajaActual = 1;
 		pokemones = new JComboBox<>();
 		ventana = new JPanel();
@@ -45,6 +62,7 @@ public class VentanaPrincipal extends JFrame {
 		mover = new JLabel("Move", SwingConstants.CENTER);
 		liberar = new JLabel("Liberate", SwingConstants.CENTER);
 		sumar = new JLabel("Capture", SwingConstants.CENTER);
+		actualizar = new JLabel("Update", SwingConstants.CENTER);
 		pr = new Color(56, 56, 56);
 		sc = new Color(72, 72, 72);
 		dCaja = new Dimension(168 * 5, 121 * 5);
@@ -61,6 +79,7 @@ public class VentanaPrincipal extends JFrame {
 		fondo = new JLabel();
 		izquierda = new JLabel("<", SwingConstants.CENTER);
 		derecha = new JLabel(">", SwingConstants.CENTER);
+		pokesBolsillo = new ArrayList<>();
 		//
 		botones.add(salir);
 		botones.add(fantasma);
@@ -76,6 +95,14 @@ public class VentanaPrincipal extends JFrame {
 		botones.add(pokemon6);
 		botones.add(izquierda);
 		botones.add(derecha);
+		botones.add(actualizar);
+		//
+		pokesBolsillo.add(pokemon1);
+		pokesBolsillo.add(pokemon2);
+		pokesBolsillo.add(pokemon3);
+		pokesBolsillo.add(pokemon4);
+		pokesBolsillo.add(pokemon5);
+		pokesBolsillo.add(pokemon6);
 		//
 		salir.setForeground(Color.WHITE);
 		salir.setFont(fuente.deriveFont(Font.BOLD, 30));
@@ -84,6 +111,13 @@ public class VentanaPrincipal extends JFrame {
 		salir.addMouseListener(mouse);
 		salir.setBackground(Color.RED);
 		salir.setOpaque(true);
+		actualizar.setForeground(Color.WHITE);
+		actualizar.setFont(fuente.deriveFont(Font.BOLD, 30));
+		actualizar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		actualizar.setBounds(90, 480, 150, 50);
+		actualizar.addMouseListener(mouse);
+		actualizar.setBackground(Color.RED);
+		actualizar.setOpaque(true);
 		fantasma.setBounds(0, 0, 1280, 100);
 		fantasma.addMouseListener(mouse);
 		fantasma.addMouseMotionListener(motion);
@@ -132,30 +166,10 @@ public class VentanaPrincipal extends JFrame {
 		pokemones.setBackground(pr);
 		pokemones.setEditable(false);
 		pokemones.setForeground(Color.WHITE);
-		pokemones.addItem("wua");
-		if (pokemones.getItemCount() == 0) {
-			pokemones.setEnabled(false);
-			liberar.setEnabled(false);
-			liberar.addMouseListener(null);
-			mover.setEnabled(false);
-			mover.addMouseListener(null);
-			datos.setEnabled(false);
-			datos.addMouseListener(null);
-		} else {
-			pokemones.setEnabled(true);
-			liberar.setEnabled(true);
-			mover.setEnabled(true);
-			datos.setEnabled(true);
-			liberar.addMouseListener(mouse);
-			mover.addMouseListener(mouse);
-			datos.addMouseListener(mouse);
-		}
-		caja.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/Inf1.png").getImage()
+		caja.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/img/Inf1.png").getImage()
 				.getScaledInstance((int) (dCaja.getWidth()), (int) (dCaja.getHeight() - 85), Image.SCALE_DEFAULT)));
 		caja.setBounds(425, 120, (int) (dCaja.getWidth()), (int) (dCaja.getHeight() - 85));
 		imagen.setBounds(445, 150, 300, 350);
-		imagen.setBackground(Color.red);
-		imagen.setOpaque(true);
 		caja.add(pokemones);
 		caja.add(mover);
 		caja.add(liberar);
@@ -163,7 +177,7 @@ public class VentanaPrincipal extends JFrame {
 		caja.add(sumar);
 		caja.add(imagen);
 		//
-		barra.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/Sup1.png").getImage()
+		barra.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/img/Sup1.png").getImage()
 				.getScaledInstance((int) (dBarra.getWidth()), (int) (dBarra.getHeight()), Image.SCALE_DEFAULT)));
 		barra.setBounds(425, 20, (int) (dBarra.getWidth()), (int) (dBarra.getHeight()));
 		titulo.setFont(fuente.deriveFont(0, 55));
@@ -176,38 +190,27 @@ public class VentanaPrincipal extends JFrame {
 		barra.add(izquierda);
 		barra.add(derecha);
 		//
-		bolsillo.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/bolsillo.png").getImage()
+		bolsillo.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/img/bolsillo.png").getImage()
 				.getScaledInstance(120 * 3, 208 * 3, Image.SCALE_DEFAULT)));
 		bolsillo.setBounds(32, 20, 120 * 3, 208 * 3);
 		bolsillo.add(salir);
+		bolsillo.add(actualizar);
 		pokemon1.setBounds(45, 75, 100, 100);
-		pokemon1.setBackground(Color.pink);
-		pokemon1.setOpaque(true);
 		pokemon1.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		pokemon1.addMouseListener(mouse);
 		pokemon2.setBounds(190, 100, 100, 100);
-		pokemon2.setBackground(Color.pink);
-		pokemon2.setOpaque(true);
 		pokemon2.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		pokemon2.addMouseListener(mouse);
 		pokemon3.setBounds(45, 195, 100, 100);
-		pokemon3.setBackground(Color.pink);
-		pokemon3.setOpaque(true);
 		pokemon3.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		pokemon3.addMouseListener(mouse);
 		pokemon4.setBounds(190, 220, 100, 100);
-		pokemon4.setBackground(Color.pink);
-		pokemon4.setOpaque(true);
 		pokemon4.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		pokemon4.addMouseListener(mouse);
 		pokemon5.setBounds(45, 315, 100, 100);
-		pokemon5.setBackground(Color.pink);
-		pokemon5.setOpaque(true);
 		pokemon5.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		pokemon5.addMouseListener(mouse);
 		pokemon6.setBounds(190, 340, 100, 100);
-		pokemon6.setBackground(Color.pink);
-		pokemon6.setOpaque(true);
 		pokemon6.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		pokemon6.addMouseListener(mouse);
 		bolsillo.add(pokemon1);
@@ -232,9 +235,11 @@ public class VentanaPrincipal extends JFrame {
 		ventana.add(fondo);
 		//
 		this.add(ventana);
-		fondo.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/fondo.png").getImage()
+		fondo.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/img/fondo.png").getImage()
 				.getScaledInstance((int) (this.getWidth()), (int) (this.getHeight()), Image.SCALE_DEFAULT)));
 		fondo.setSize(((int) (this.getWidth())), (int) (this.getHeight()));
+		pokemones.addItemListener(itemLis);
+		comprobar();
 	}
 
 	/**
@@ -254,8 +259,8 @@ public class VentanaPrincipal extends JFrame {
 	 * @param x The label to change the color.
 	 */
 	public void interiorColor(int x) {
-		if (x == 0) {
-			salir.setBackground(Color.BLACK);
+		if (x == 0 || x == 14) {
+			botones.get(x).setBackground(Color.BLACK);
 		} else if (x < 6) {
 			botones.get(x).setBackground(sc);
 		} else if (x > 11) {
@@ -270,8 +275,8 @@ public class VentanaPrincipal extends JFrame {
 	 * @param x The label to change the color.
 	 */
 	public void exteriorColor(int x) {
-		if (x == 0) {
-			salir.setBackground(Color.RED);
+		if (x == 0 || x == 14) {
+			botones.get(x).setBackground(Color.RED);
 		} else if (x < 6) {
 			botones.get(x).setBackground(pr);
 		} else if (x > 11) {
@@ -290,9 +295,14 @@ public class VentanaPrincipal extends JFrame {
 
 	}
 
+	/**
+	 * Method for adding a pokemon to the selection.
+	 * 
+	 * @param nombre Name of the pokemon.
+	 */
 	public void agregarComboBox(String nombre) {
 		pokemones.addItem(nombre);
-		pokemones.setSelectedIndex(0);
+
 	}
 
 	/**
@@ -326,7 +336,8 @@ public class VentanaPrincipal extends JFrame {
 	 * @param i Int of the index
 	 */
 	public void seleccionar(int i) {
-		pokemones.setSelectedIndex(i);
+		pokemones.setSelectedItem(i);
+		System.err.println(pokemones.getSelectedItem());
 	}
 
 	/**
@@ -338,45 +349,119 @@ public class VentanaPrincipal extends JFrame {
 		return pokemones;
 	}
 
+	/**
+	 * Method in charge of the main pokemon change.
+	 * 
+	 * @param url Url of the imagen.
+	 */
 	public void cambioImagen(String url) {
-		imagen.setIcon(new ImageIcon(new ImageIcon(url).getImage().getScaledInstance(imagen.getWidth(),
-				imagen.getHeight(), Image.SCALE_DEFAULT)));
+		if (url != null) {
+			imagen.setIcon(new ImageIcon(new ImageIcon(url).getImage().getScaledInstance(imagen.getWidth(),
+					imagen.getHeight(), Image.SCALE_DEFAULT)));
+		} else {
+			imagen.setIcon(null);
+
+		}
 	}
 
-	public boolean cambioCaja(int x) {
+	/**
+	 * Method in charge of changing boxes in the main window.
+	 * 
+	 * @param x     Box selected
+	 * @param pokes Pokemons in the box
+	 */
+	public void cambioCaja(int x) {
 		if (x == 1) {
-			caja.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/Inf1.png").getImage()
+			caja.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/img/Inf1.png").getImage()
 					.getScaledInstance((int) (dCaja.getWidth()), (int) (dCaja.getHeight() - 85), Image.SCALE_DEFAULT)));
-			barra.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/Sup1.png").getImage()
+			barra.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/img/Sup1.png").getImage()
 					.getScaledInstance((int) (dBarra.getWidth()), (int) (dBarra.getHeight()), Image.SCALE_DEFAULT)));
 			titulo.setText("Box 1");
 			cajaActual = 1;
-			return true;
 		} else if (x == 2) {
-			caja.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/Inf2.png").getImage()
+			caja.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/img/Inf2.png").getImage()
 					.getScaledInstance((int) (dCaja.getWidth()), (int) (dCaja.getHeight() - 85), Image.SCALE_DEFAULT)));
-			barra.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/Sup2.png").getImage()
+			barra.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/img/Sup2.png").getImage()
 					.getScaledInstance((int) (dBarra.getWidth()), (int) (dBarra.getHeight()), Image.SCALE_DEFAULT)));
 			titulo.setText("Box 2");
 			cajaActual = 2;
-			return true;
 		} else if (x == 3) {
-			caja.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/Inf3.png").getImage()
+			caja.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/img/Inf3.png").getImage()
 					.getScaledInstance((int) (dCaja.getWidth()), (int) (dCaja.getHeight() - 85), Image.SCALE_DEFAULT)));
-			barra.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/Sup3.png").getImage()
+			barra.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/img/Sup3.png").getImage()
 					.getScaledInstance((int) (dBarra.getWidth()), (int) (dBarra.getHeight()), Image.SCALE_DEFAULT)));
 			titulo.setText("Box 3");
 			cajaActual = 3;
-			return true;
 		}
-		return false;
+
 	}
 
+	/**
+	 * Method in charge of giving the box in use.
+	 * 
+	 * @return Number of the box
+	 */
 	public int getCajaActual() {
 		return cajaActual;
 	}
 
+	/**
+	 * Method in charge of adding an item in the box.
+	 * 
+	 * @param item Item to add.
+	 */
 	public void agregarItem(String item) {
 		pokemones.addItem(item);
+	}
+
+	/**
+	 * Method for placing images of the suitcase.
+	 * 
+	 * @param urls Arrangement with the images.
+	 */
+	public void agregarBolsilloImg(String urls) {
+
+		String[] tmp2 = urls.split("%!%");
+		for (int i = 0; i < tmp2.length; i++) {
+			String tmp = tmp2[i].split("%&")[4].split("-")[8];
+			if (!tmp.split("/")[0].equals("src")) {
+				tmp = tmp2[i].split("%&")[4].split("-")[9];
+			}
+			pokesBolsillo.get(i).setIcon(new ImageIcon(new ImageIcon(tmp).getImage()
+					.getScaledInstance(pokemon1.getWidth(), pokemon1.getHeight(), Image.SCALE_DEFAULT)));
+		}
+
+	}
+
+	/**
+	 * Method that obtains the current selected pokemon
+	 * 
+	 * @return Pokemon current
+	 */
+	public String getActual() {
+		return (String) pokemones.getSelectedItem();
+	}
+
+	/**
+	 * Method to check if a pokemon's buttons can be used.
+	 */
+	public void comprobar() {
+		if (pokemones.getItemCount() == 0) {
+			pokemones.setEnabled(false);
+			liberar.setEnabled(false);
+			liberar.addMouseListener(null);
+			mover.setEnabled(false);
+			mover.addMouseListener(null);
+			datos.setEnabled(false);
+			datos.addMouseListener(null);
+		} else {
+			pokemones.setEnabled(true);
+			liberar.setEnabled(true);
+			mover.setEnabled(true);
+			datos.setEnabled(true);
+			liberar.addMouseListener(m);
+			mover.addMouseListener(m);
+			datos.addMouseListener(m);
+		}
 	}
 }

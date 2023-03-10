@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.IOException;
 
 /**
+ * Class in charge of creating the source for the program.
+ * 
  * @author MiguelLinares
  * @author JohanSilva
  */

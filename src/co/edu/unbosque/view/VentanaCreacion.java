@@ -17,6 +17,14 @@ import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 
+/**
+ * 
+ * Class in charge of the creation of the creation user window of the program.
+ * 
+ * @author Miguel Linares
+ * @author Johan Silva
+ *
+ */
 @SuppressWarnings("serial")
 public class VentanaCreacion extends JFrame {
 	private JPanel ventana;
@@ -27,6 +35,13 @@ public class VentanaCreacion extends JFrame {
 	private ArrayList<JLabel> botones;
 	private JTextPane text;
 
+	/**
+	 * Constructor of the class where you initialize what is going to be used in the
+	 * window.
+	 * 
+	 * @param mouse Mouse action listener
+	 * @param momo  Motion Mouse Actions Listener
+	 */
 	public VentanaCreacion(MouseListener mouse, MouseMotionListener momo) {
 		fuente = Fuente.oFuente();
 		ventana = new JPanel();
@@ -91,7 +106,7 @@ public class VentanaCreacion extends JFrame {
 		ventana.add(fondo);
 		//
 		this.add(ventana);
-		fondo.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/fondo.png").getImage()
+		fondo.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/img/fondo.png").getImage()
 				.getScaledInstance((int) (this.getWidth()), (int) (this.getHeight()), Image.SCALE_DEFAULT)));
 		fondo.setSize(((int) (this.getWidth())), (int) (this.getHeight()));
 	}
@@ -145,6 +160,11 @@ public class VentanaCreacion extends JFrame {
 
 	}
 
+	/**
+	 * Method that obtains the information written in the user's box
+	 * 
+	 * @return User entered
+	 */
 	public String getUsuario() {
 		return usuario.getText();
 	}
