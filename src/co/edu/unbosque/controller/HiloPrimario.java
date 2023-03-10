@@ -158,10 +158,9 @@ public class HiloPrimario extends Thread {
 								String[] tmp2 = tmp[i].split("%&");
 								principal.agregarItem(tmp2[4].split("-")[0]);
 							}
-							principal.cambioCaja(1);
+							principal.seleccionar(0);
 							principal.comprobar();
 						} catch (Exception e) {
-							principal.seleccionar(1);
 							principal.comprobar();
 						}
 
@@ -187,7 +186,7 @@ public class HiloPrimario extends Thread {
 								String[] tmp2 = tmp[i].split("%&");
 								principal.agregarItem(tmp2[4].split("-")[0]);
 							}
-							principal.seleccionar(1);
+							principal.seleccionar(0);
 							principal.comprobar();
 						} catch (Exception e) {
 							principal.comprobar();
@@ -198,7 +197,6 @@ public class HiloPrimario extends Thread {
 					if (res.equals("error") || res.equals("") || res == null) {
 						System.out.println("Vacio");
 					} else {
-						System.out.println(res);
 						String tmp3 = res;
 						String[] aux = tmp3.split("@");
 						try {
@@ -215,7 +213,6 @@ public class HiloPrimario extends Thread {
 								String[] tmp2 = tmp[i].split("%&");
 								principal.agregarItem(tmp2[4].split("-")[0]);
 							}
-							principal.seleccionar(1);
 							principal.comprobar();
 						} catch (Exception e) {
 							principal.comprobar();
@@ -265,21 +262,69 @@ public class HiloPrimario extends Thread {
 						mensaje.mensaje("a");
 					} else {
 						try {
-							System.err.println(res);
 							String tmp[] = res.split("%&");
 							String imagen = tmp[4].split("-")[8];
 							if (!imagen.split("/")[0].equals("src")) {
 								imagen = tmp[4].split("-")[9];
 							}
-							System.err.println(imagen);
-							principal.cambioImagen(imagen);
+							if (tmp[4].split("-")[0].equals(line.split("@")[1].split("-")[1])) {
+								principal.cambioImagen(imagen);
+							}
+							String[] poke = res.split("&");
+							String[] stats = poke[0].split("-");
+							int num = Integer.parseInt(stats[0]);
+							int hp = Integer.parseInt(stats[1]);
+							int attack = Integer.parseInt(stats[2]);
+							int defense = Integer.parseInt(stats[3]);
+							int spAtk = Integer.parseInt(stats[4]);
+							int spDef = Integer.parseInt(stats[5]);
+							int speed = Integer.parseInt(stats[6]);
+							arriba.cambiarEstadis(hp, attack, defense, spAtk, spDef, speed);
+							String[] mov1 = poke[1].split("-");
+							String[] mov2 = poke[2].split("-");
+							String[] mov3 = poke[3].split("-");
+							String[] mov4 = poke[4].split("-");
+							abajo.cambiarMovimientos(mov1[0] + " " + mov1[1] + " " + mov1[2] + " " + mov1[3], mov1[4],
+									mov1[5], mov2[0] + " " + mov2[1] + " " + mov2[2] + " " + mov2[3], mov2[4], mov2[5],
+									mov3[0] + " " + mov3[1] + " " + mov3[2] + " " + mov3[3], mov3[4], mov3[5],
+									mov4[0] + " " + mov4[1] + " " + mov4[2] + " " + mov4[3], mov4[4], mov4[5]);
+							String[] info = poke[5].split("-");
+							String mote = info[0];
+							String nombre = info[1];
+							String tipo1 = info[2];
+							String tipo2 = info[3];
+							String desc = info[4];
+							String hab1 = info[5];
+							String hab2 = info[6];
+							String hab3 = info[7];
+							String gif = info[8];
+							arriba.cambiarDescripcion(desc);
+							arriba.cambiarHabilidades(hab1, hab2, hab3);
+							arriba.cambiarNombre(nombre + " " + mote);
+							arriba.cambiarTipos(tipo1, tipo2);
+							arriba.imagenPokeCambio(gif);
+
 						} catch (Exception e) {
 							// TODO: handle exception
 						}
 
 					}
 				}
-				if (!line.equals("Over") && !estado) {
+				if (line.split("@")[0].split("-")[1].equals("liberar")) {
+					if (res.equals("logro")) {
+						mensaje.mensaje("Released successfully");
+					} else {
+						mensaje.mensaje("Pokemon Does Not Exist");
+					}
+				}
+				if (line.split("@")[0].split("-")[1].equals("mover")) {
+					if (res.equals("logro")) {
+						mensaje.mensaje("Pokemon Successfully Moved");
+					} else {
+						mensaje.mensaje("Pokemon Does Not Exist");
+					}
+				}
+				if (!line.equals("Over")) {
 					line = "";
 				}
 //				if (res.equals("error")) {

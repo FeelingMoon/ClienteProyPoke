@@ -147,10 +147,9 @@ public class PanelAbajo extends JPanel {
 		volver.setBackground(pr);
 		volver.setOpaque(true);
 		volver.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		botones.setLayout(new GridLayout(1, 3));
+		botones.setLayout(new GridLayout(1, 2));
 		botones.setPreferredSize(new Dimension(600, 70));
 		botones.add(detalles);
-		botones.add(grito);
 		botones.add(volver);
 		this.setLayout(new BorderLayout());
 		this.add(principal, BorderLayout.CENTER);

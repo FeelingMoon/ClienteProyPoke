@@ -99,7 +99,7 @@ public class Controller implements MouseListener, MouseMotionListener, ItemListe
 			System.exit(0);
 		} else if (e.getSource().equals(primario.principal.obtenerLB(2))) {
 			// liberar
-			primario.free.cambiarTextoPoke("Pikachu");
+			primario.free.cambiarTextoPoke(primario.principal.getActual());
 			primario.principal.setVisible(false);
 			primario.free.setVisible(true);
 		} else if (e.getSource().equals(primario.principal.obtenerLB(3))) {
@@ -158,6 +158,13 @@ public class Controller implements MouseListener, MouseMotionListener, ItemListe
 		} else if (e.getSource().equals(primario.principal.obtenerLB(14))) {
 			// Actualizar
 			primario.enviarInfo(primario.userActual + "-getCB@" + primario.principal.getCajaActual());
+			primario.enviarInfo(primario.userActual + "-getCB@" + primario.principal.getCajaActual());
+			if (!primario.bolsillo.equals("")) {
+				primario.principal.agregarBolsilloImg(primario.bolsillo);
+				primario.enviarInfo(primario.userActual + "-getMote@" + primario.principal.getCajaActual() + "-"
+						+ primario.principal.getActual());
+			}
+
 		} else if (e.getSource().equals(primario.abajo.obtenerLB(0))) {
 			// Grito
 		} else if (e.getSource().equals(primario.abajo.obtenerLB(1))) {
@@ -191,7 +198,10 @@ public class Controller implements MouseListener, MouseMotionListener, ItemListe
 			primario.principal.setVisible(true);
 		} else if (e.getSource().equals(primario.mov.obtenerLB(2))) {
 			// Mover
-			System.out.println(primario.mov.getBoxSelected());
+			System.out.println(primario.userActual + "-mover@" + primario.principal.getCajaActual() + "-"
+					+ primario.mov.getBoxSelected() + "-" + primario.principal.getActual());
+			primario.enviarInfo(primario.userActual + "-mover@" + primario.principal.getCajaActual() + "-"
+					+ primario.mov.getBoxSelected() + "-" + primario.principal.getActual());
 			primario.mov.setVisible(false);
 			primario.principal.setVisible(true);
 		} else if (e.getSource().equals(primario.free.obtenerLB(0))) {
@@ -199,7 +209,7 @@ public class Controller implements MouseListener, MouseMotionListener, ItemListe
 			primario.free.setVisible(false);
 			primario.principal.setVisible(true);
 		} else if (e.getSource().equals(primario.free.obtenerLB(2))) {
-			// Liberar
+			// liberar
 			primario.enviarInfo(primario.userActual + "-liberar@" + primario.principal.getCajaActual() + "-"
 					+ primario.principal.getActual());
 			primario.free.setVisible(false);
@@ -391,12 +401,8 @@ public class Controller implements MouseListener, MouseMotionListener, ItemListe
 	public void itemStateChanged(ItemEvent e) {
 
 		if (e.getSource().equals(primario.principal.getCombo())) {
-			System.err.println(primario.principal.getActual());
-			System.err.println(primario.userActual + "-getMote@" + primario.principal.getCajaActual() + "-"
-					+ primario.principal.getActual());
 			primario.enviarInfo(primario.userActual + "-getMote@" + primario.principal.getCajaActual() + "-"
 					+ primario.principal.getActual());
-
 		}
 
 	}

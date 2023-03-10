@@ -114,7 +114,7 @@ public class VentanaPrincipal extends JFrame {
 		actualizar.setForeground(Color.WHITE);
 		actualizar.setFont(fuente.deriveFont(Font.BOLD, 30));
 		actualizar.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		actualizar.setBounds(90, 450, 150, 50);
+		actualizar.setBounds(90, 480, 150, 50);
 		actualizar.addMouseListener(mouse);
 		actualizar.setBackground(Color.RED);
 		actualizar.setOpaque(true);
@@ -196,33 +196,21 @@ public class VentanaPrincipal extends JFrame {
 		bolsillo.add(salir);
 		bolsillo.add(actualizar);
 		pokemon1.setBounds(45, 75, 100, 100);
-		pokemon1.setBackground(Color.pink);
-		pokemon1.setOpaque(true);
 		pokemon1.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		pokemon1.addMouseListener(mouse);
 		pokemon2.setBounds(190, 100, 100, 100);
-		pokemon2.setBackground(Color.pink);
-		pokemon2.setOpaque(true);
 		pokemon2.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		pokemon2.addMouseListener(mouse);
 		pokemon3.setBounds(45, 195, 100, 100);
-		pokemon3.setBackground(Color.pink);
-		pokemon3.setOpaque(true);
 		pokemon3.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		pokemon3.addMouseListener(mouse);
 		pokemon4.setBounds(190, 220, 100, 100);
-		pokemon4.setBackground(Color.pink);
-		pokemon4.setOpaque(true);
 		pokemon4.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		pokemon4.addMouseListener(mouse);
 		pokemon5.setBounds(45, 315, 100, 100);
-		pokemon5.setBackground(Color.pink);
-		pokemon5.setOpaque(true);
 		pokemon5.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		pokemon5.addMouseListener(mouse);
 		pokemon6.setBounds(190, 340, 100, 100);
-		pokemon6.setBackground(Color.pink);
-		pokemon6.setOpaque(true);
 		pokemon6.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		pokemon6.addMouseListener(mouse);
 		bolsillo.add(pokemon1);
@@ -348,7 +336,8 @@ public class VentanaPrincipal extends JFrame {
 	 * @param i Int of the index
 	 */
 	public void seleccionar(int i) {
-		pokemones.setSelectedIndex(i);
+		pokemones.setSelectedItem(i);
+		System.err.println(pokemones.getSelectedItem());
 	}
 
 	/**
@@ -430,13 +419,18 @@ public class VentanaPrincipal extends JFrame {
 	 * 
 	 * @param urls Arrangement with the images.
 	 */
-	public void agregarBolsilloImg(String[] urls) {
+	public void agregarBolsilloImg(String urls) {
 
-		for (int i = 0; i < pokesBolsillo.size(); i++) {
-			if (pokesBolsillo.get(i).getIcon() != null) {
-				pokesBolsillo.get(i).setOpaque(false);
+		String[] tmp2 = urls.split("%!%");
+		for (int i = 0; i < tmp2.length; i++) {
+			String tmp = tmp2[i].split("%&")[4].split("-")[8];
+			if (!tmp.split("/")[0].equals("src")) {
+				tmp = tmp2[i].split("%&")[4].split("-")[9];
 			}
+			pokesBolsillo.get(i).setIcon(new ImageIcon(new ImageIcon(tmp).getImage()
+					.getScaledInstance(pokemon1.getWidth(), pokemon1.getHeight(), Image.SCALE_DEFAULT)));
 		}
+
 	}
 
 	/**
