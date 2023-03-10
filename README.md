@@ -9,3 +9,9 @@ In this you can perform various actions such as creating custom pokemon, with th
 - Release, move and view pokemon stats.
 
 ## Galery:
+
+![User login](images/img1.png)
+![Boxes](images/img2.png)
+![Boxes and pocket](images/img3.png)
+![Info](images/img4.png)
+![Stats](images/img5.png)
