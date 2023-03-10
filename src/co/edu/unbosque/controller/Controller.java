@@ -129,21 +129,35 @@ public class Controller implements MouseListener, MouseMotionListener, ItemListe
 			// Izquierda
 
 			if (primario.principal.getCajaActual() == 3) {
+				primario.principal.eliminarComboBox();
+				primario.principal.cambioImagen(null);
 				primario.principal.cambioCaja(2);
+				primario.enviarInfo(primario.userActual + "-getCB@" + 2);
 			} else if (primario.principal.getCajaActual() == 2) {
+				primario.principal.eliminarComboBox();
+				primario.principal.cambioImagen(null);
 				primario.principal.cambioCaja(1);
+				primario.enviarInfo(primario.userActual + "-getCB@" + 1);
 			}
 
 		} else if (e.getSource().equals(primario.principal.obtenerLB(13))) {
 			// Derecha
 			if (primario.principal.getCajaActual() == 1) {
+				primario.principal.eliminarComboBox();
+				primario.principal.cambioImagen(null);
 				primario.principal.cambioCaja(2);
+				primario.enviarInfo(primario.userActual + "-getCB@" + 2);
+				System.err.println(primario.principal.getCajaActual());
 			} else if (primario.principal.getCajaActual() == 2) {
+				primario.principal.eliminarComboBox();
+				primario.principal.cambioImagen(null);
 				primario.principal.cambioCaja(3);
+				primario.enviarInfo(primario.userActual + "-getCB@" + 3);
+				System.err.println(primario.principal.getCajaActual());
 			}
 		} else if (e.getSource().equals(primario.principal.obtenerLB(14))) {
 			// Actualizar
-			primario.enviarInfo(primario.userActual + "-get@" + primario.numCaja);
+			primario.enviarInfo(primario.userActual + "-getCB@" + primario.principal.getCajaActual());
 		} else if (e.getSource().equals(primario.abajo.obtenerLB(0))) {
 			// Grito
 		} else if (e.getSource().equals(primario.abajo.obtenerLB(1))) {
@@ -210,12 +224,10 @@ public class Controller implements MouseListener, MouseMotionListener, ItemListe
 			if (primario.captura.getNombre().equals("") || primario.captura.getNombre().equals(null)) {
 				primario.enviarInfo(
 						primario.userActual + "-capturar@" + tmp + "-Nothing-" + primario.captura.getCaja());
-				Mensaje.mensaje("Agregado con exito");
 				primario.captura.limpiar();
 			} else {
 				primario.enviarInfo(primario.userActual + "-capturar@" + tmp + "-" + primario.captura.getNombre() + "-"
 						+ primario.captura.getCaja());
-				Mensaje.mensaje("Agregado con exito");
 				primario.captura.limpiar();
 			}
 			primario.captura.setVisible(false);
@@ -377,17 +389,15 @@ public class Controller implements MouseListener, MouseMotionListener, ItemListe
 
 	@Override
 	public void itemStateChanged(ItemEvent e) {
-		// 1.Pokemon, 2.Pokemon
 
-//		if (e.getSource().equals(primario.principal.getCombo())) {
-//			primario.principal.getCombo().getSelectedItem();
-//			String end = "";
-//			String cad = (String) primario.principal.getActual();
-//			for (int i = 0; i < cad.length(); i++) {
-//				if (Character.isDigit(cad.charAt(i)))
-//					end = end + cad.charAt(i);
-//			}
-//		}
+		if (e.getSource().equals(primario.principal.getCombo())) {
+			System.err.println(primario.principal.getActual());
+			System.err.println(primario.userActual + "-getMote@" + primario.principal.getCajaActual() + "-"
+					+ primario.principal.getActual());
+			primario.enviarInfo(primario.userActual + "-getMote@" + primario.principal.getCajaActual() + "-"
+					+ primario.principal.getActual());
+
+		}
 
 	}
 

@@ -106,7 +106,7 @@ public class VentanaCreacion extends JFrame {
 		ventana.add(fondo);
 		//
 		this.add(ventana);
-		fondo.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/fondo.png").getImage()
+		fondo.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/img/fondo.png").getImage()
 				.getScaledInstance((int) (this.getWidth()), (int) (this.getHeight()), Image.SCALE_DEFAULT)));
 		fondo.setSize(((int) (this.getWidth())), (int) (this.getHeight()));
 	}

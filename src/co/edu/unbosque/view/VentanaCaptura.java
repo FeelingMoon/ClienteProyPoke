@@ -39,7 +39,7 @@ public class VentanaCaptura extends JFrame {
 	private JComboBox<String> cajas, pokemon;
 
 	/**
-	 * Cosntructor where you initialize what is used in the window.
+	 * Cosntructor where you initialize what is used in the window. x
 	 * 
 	 * @param mouse   Mouse action listener
 	 * @param momo    Motion Mouse Actions Listener
@@ -141,7 +141,7 @@ public class VentanaCaptura extends JFrame {
 		ventana.add(fondo);
 		//
 		this.add(ventana);
-		fondo.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/fondo.png").getImage()
+		fondo.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/img/fondo.png").getImage()
 				.getScaledInstance((int) (this.getWidth()), (int) (this.getHeight()), Image.SCALE_DEFAULT)));
 		fondo.setSize(((int) (this.getWidth())), (int) (this.getHeight()));
 		cajas.addItemListener(itemLis);
@@ -270,7 +270,11 @@ public class VentanaCaptura extends JFrame {
 			if (Character.isDigit(cad.charAt(i)))
 				end = end + cad.charAt(i);
 		}
+		if (end == null || end.equals("")) {
+			end = "0";
+		}
 		return end;
+
 	}
 
 	/**

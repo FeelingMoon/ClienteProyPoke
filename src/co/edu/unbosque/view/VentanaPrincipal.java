@@ -166,12 +166,10 @@ public class VentanaPrincipal extends JFrame {
 		pokemones.setBackground(pr);
 		pokemones.setEditable(false);
 		pokemones.setForeground(Color.WHITE);
-		caja.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/Inf1.png").getImage()
+		caja.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/img/Inf1.png").getImage()
 				.getScaledInstance((int) (dCaja.getWidth()), (int) (dCaja.getHeight() - 85), Image.SCALE_DEFAULT)));
 		caja.setBounds(425, 120, (int) (dCaja.getWidth()), (int) (dCaja.getHeight() - 85));
 		imagen.setBounds(445, 150, 300, 350);
-		imagen.setBackground(Color.red);
-		imagen.setOpaque(true);
 		caja.add(pokemones);
 		caja.add(mover);
 		caja.add(liberar);
@@ -179,7 +177,7 @@ public class VentanaPrincipal extends JFrame {
 		caja.add(sumar);
 		caja.add(imagen);
 		//
-		barra.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/Sup1.png").getImage()
+		barra.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/img/Sup1.png").getImage()
 				.getScaledInstance((int) (dBarra.getWidth()), (int) (dBarra.getHeight()), Image.SCALE_DEFAULT)));
 		barra.setBounds(425, 20, (int) (dBarra.getWidth()), (int) (dBarra.getHeight()));
 		titulo.setFont(fuente.deriveFont(0, 55));
@@ -192,7 +190,7 @@ public class VentanaPrincipal extends JFrame {
 		barra.add(izquierda);
 		barra.add(derecha);
 		//
-		bolsillo.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/bolsillo.png").getImage()
+		bolsillo.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/img/bolsillo.png").getImage()
 				.getScaledInstance(120 * 3, 208 * 3, Image.SCALE_DEFAULT)));
 		bolsillo.setBounds(32, 20, 120 * 3, 208 * 3);
 		bolsillo.add(salir);
@@ -249,7 +247,7 @@ public class VentanaPrincipal extends JFrame {
 		ventana.add(fondo);
 		//
 		this.add(ventana);
-		fondo.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/fondo.png").getImage()
+		fondo.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/img/fondo.png").getImage()
 				.getScaledInstance((int) (this.getWidth()), (int) (this.getHeight()), Image.SCALE_DEFAULT)));
 		fondo.setSize(((int) (this.getWidth())), (int) (this.getHeight()));
 		pokemones.addItemListener(itemLis);
@@ -369,11 +367,11 @@ public class VentanaPrincipal extends JFrame {
 	 */
 	public void cambioImagen(String url) {
 		if (url != null) {
-			imagen.setOpaque(true);
 			imagen.setIcon(new ImageIcon(new ImageIcon(url).getImage().getScaledInstance(imagen.getWidth(),
 					imagen.getHeight(), Image.SCALE_DEFAULT)));
 		} else {
-			imagen.setOpaque(false);
+			imagen.setIcon(null);
+
 		}
 	}
 
@@ -385,30 +383,25 @@ public class VentanaPrincipal extends JFrame {
 	 */
 	public void cambioCaja(int x) {
 		if (x == 1) {
-			caja.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/Inf1.png").getImage()
+			caja.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/img/Inf1.png").getImage()
 					.getScaledInstance((int) (dCaja.getWidth()), (int) (dCaja.getHeight() - 85), Image.SCALE_DEFAULT)));
-			barra.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/Sup1.png").getImage()
+			barra.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/img/Sup1.png").getImage()
 					.getScaledInstance((int) (dBarra.getWidth()), (int) (dBarra.getHeight()), Image.SCALE_DEFAULT)));
 			titulo.setText("Box 1");
 			cajaActual = 1;
-		} else if (x == 2)
-
-		{
-			caja.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/Inf2.png").getImage()
+		} else if (x == 2) {
+			caja.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/img/Inf2.png").getImage()
 					.getScaledInstance((int) (dCaja.getWidth()), (int) (dCaja.getHeight() - 85), Image.SCALE_DEFAULT)));
-			barra.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/Sup2.png").getImage()
+			barra.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/img/Sup2.png").getImage()
 					.getScaledInstance((int) (dBarra.getWidth()), (int) (dBarra.getHeight()), Image.SCALE_DEFAULT)));
 			titulo.setText("Box 2");
 			cajaActual = 2;
-			pokemones.removeAllItems();
-
 		} else if (x == 3) {
-			caja.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/Inf3.png").getImage()
+			caja.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/img/Inf3.png").getImage()
 					.getScaledInstance((int) (dCaja.getWidth()), (int) (dCaja.getHeight() - 85), Image.SCALE_DEFAULT)));
-			barra.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/Assets/Images/Sup3.png").getImage()
+			barra.setIcon(new ImageIcon(new ImageIcon("src/co/edu/unbosque/util/img/Sup3.png").getImage()
 					.getScaledInstance((int) (dBarra.getWidth()), (int) (dBarra.getHeight()), Image.SCALE_DEFAULT)));
 			titulo.setText("Box 3");
-			pokemones.removeAllItems();
 			cajaActual = 3;
 		}
 

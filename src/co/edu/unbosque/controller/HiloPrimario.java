@@ -46,9 +46,8 @@ public class HiloPrimario extends Thread {
 	PanelAbajo abajo;
 	VentanaCreacionUsuario createUs;
 	String userActual;
-	String cajaActualPoke;
+	String cajaActualPoke, bolsillo;
 	Boolean estado;
-	int numCaja;
 	private Mensaje mensaje;
 
 	/**
@@ -83,7 +82,7 @@ public class HiloPrimario extends Thread {
 		userActual = "";
 		cajaActualPoke = "";
 		estado = false;
-		numCaja = 1;
+		bolsillo = "";
 	}
 
 	@SuppressWarnings("static-access")
@@ -121,13 +120,11 @@ public class HiloPrimario extends Thread {
 					if (res.equals("logro")) {
 						userActual = line.split("@")[0].split("-")[0];
 						user.setVisible(false);
-//						estado = true;
 						Mensaje.mensaje("Welcome " + user.getUsuario());
-//						line = userActual + "-get@" + numCaja;
 						principal.setVisible(true);
 					} else {
 						System.err.println(res);
-						mensaje.mensaje("Usuario No Existente");
+						mensaje.mensaje("User Does Not Exist");
 					}
 				}
 				if (line.split("@")[0].split("-")[1].equals("nuevo")) {
@@ -135,51 +132,104 @@ public class HiloPrimario extends Thread {
 						Mensaje.mensaje("User created successfully");
 						createUs.setVisible(false);
 						user.setVisible(true);
+					} else if (res.equalsIgnoreCase("exist")) {
+						Mensaje.mensaje("The user exists");
 					} else {
 						Mensaje.mensaje("Could not create");
 					}
 				}
-				if (line.split("@")[0].split("-")[1].equals("get") && line.split("@")[1].equals("1")) {
-					if (res.equals("error")) {
-						System.err.println("Vacio");
+				if (line.split("@")[0].split("-")[1].equals("getCB") && line.split("@")[1].equals("1")) {
+					if (res.equals("error") || res.equals("") || res == null) {
+						mensaje.mensaje("It has no captured pokemon.");
 					} else {
-						cajaActualPoke = res;
-						String[] tmp = cajaActualPoke.split("%!%");
-						for (int i = 0; i < tmp.length; i++) {
-
+						String tmp3 = res;
+						String[] aux = tmp3.split("@");
+						try {
+							bolsillo = aux[0];
+						} catch (Exception e) {
+						}
+						try {
+							cajaActualPoke = aux[1];
+							String[] tmp = aux[1].split("%!%");
+							for (int i = 0; i < tmp.length; i++) {
+							}
+							principal.eliminarComboBox();
+							for (int i = 0; i < tmp.length; i++) {
+								String[] tmp2 = tmp[i].split("%&");
+								principal.agregarItem(tmp2[4].split("-")[0]);
+							}
+							principal.cambioCaja(1);
+							principal.comprobar();
+						} catch (Exception e) {
+							principal.seleccionar(1);
+							principal.comprobar();
 						}
 
-						principal.eliminarComboBox();
-						for (int i = 0; i < tmp.length; i++) {
-							String[] tmp2 = tmp[i].split("%&");
-							principal.agregarItem(tmp2[4].split("-")[0]);
+					}
+				}
+				if (line.split("@")[0].split("-")[1].equals("getCB") && line.split("@")[1].equals("2")) {
+					if (res.equals("error") || res.equals("") || res == null) {
+						System.out.println("Vacio");
+					} else {
+						String tmp3 = res;
+						String[] aux = tmp3.split("@");
+						try {
+							bolsillo = aux[0];
+						} catch (Exception e) {
 						}
-						principal.cambioCaja(1);
-						principal.comprobar();
+						try {
+							cajaActualPoke = aux[1];
+							String[] tmp = aux[1].split("%!%");
+							for (int i = 0; i < tmp.length; i++) {
+							}
+							principal.eliminarComboBox();
+							for (int i = 0; i < tmp.length; i++) {
+								String[] tmp2 = tmp[i].split("%&");
+								principal.agregarItem(tmp2[4].split("-")[0]);
+							}
+							principal.seleccionar(1);
+							principal.comprobar();
+						} catch (Exception e) {
+							principal.comprobar();
+						}
 					}
 				}
-				if (line.split("@")[0].split("-")[1].equals("get") && line.split("@")[1].equals("2")) {
-					if (res.equals("error")) {
+				if (line.split("@")[0].split("-")[1].equals("getCB") && line.split("@")[1].equals("3")) {
+					if (res.equals("error") || res.equals("") || res == null) {
 						System.out.println("Vacio");
 					} else {
-						cajaActualPoke = res;
-						System.err.println(cajaActualPoke + " caja2");
-					}
-				}
-				if (line.split("@")[0].split("-")[1].equals("get") && line.split("@")[1].equals("3")) {
-					if (res.equals("error")) {
-						System.out.println("Vacio");
-					} else {
-						cajaActualPoke = res;
-						System.err.println(cajaActualPoke + " caja3");
+						System.out.println(res);
+						String tmp3 = res;
+						String[] aux = tmp3.split("@");
+						try {
+							bolsillo = aux[0];
+						} catch (Exception e) {
+						}
+						try {
+							cajaActualPoke = aux[1];
+							String[] tmp = aux[1].split("%!%");
+							for (int i = 0; i < tmp.length; i++) {
+							}
+							principal.eliminarComboBox();
+							for (int i = 0; i < tmp.length; i++) {
+								String[] tmp2 = tmp[i].split("%&");
+								principal.agregarItem(tmp2[4].split("-")[0]);
+							}
+							principal.seleccionar(1);
+							principal.comprobar();
+						} catch (Exception e) {
+							principal.comprobar();
+						}
+
 					}
 				}
 				if (line.split("@")[0].split("-")[1].equals("capturar")) {
 					if (res.equals("error")) {
 						mensaje.mensaje("El bolsillo se encuentra lleno intente en una caja");
+					} else if (res.equals("exist")) {
+						mensaje.mensaje("There is already a Pokemon with that nickname.");
 					} else {
-//						estado = true;
-//						line = userActual + "-get@" + numCaja;
+						mensaje.mensaje("Agregado con exito");
 						captura.setVisible(false);
 						principal.setVisible(true);
 
@@ -210,8 +260,26 @@ public class HiloPrimario extends Thread {
 						free.setVisible(true);
 					}
 				}
+				if (line.split("@")[0].split("-")[1].equals("getMote")) {
+					if (res.equals("error")) {
+						mensaje.mensaje("a");
+					} else {
+						try {
+							System.err.println(res);
+							String tmp[] = res.split("%&");
+							String imagen = tmp[4].split("-")[8];
+							if (!imagen.split("/")[0].equals("src")) {
+								imagen = tmp[4].split("-")[9];
+							}
+							System.err.println(imagen);
+							principal.cambioImagen(imagen);
+						} catch (Exception e) {
+							// TODO: handle exception
+						}
 
-				if (!line.equals("Over")) {
+					}
+				}
+				if (!line.equals("Over") && !estado) {
 					line = "";
 				}
 //				if (res.equals("error")) {
@@ -228,7 +296,9 @@ public class HiloPrimario extends Thread {
 			}
 		}
 		// close the connection
-		try {
+		try
+
+		{
 			if (line.equals("Over")) {
 				out.close();
 				socket.close();
